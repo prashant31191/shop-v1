@@ -5,8 +5,15 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
+Route::get('/catalog', function () {
+    return view('products.catalog');
+});
 
-Route::get('/products/test', 'ProductController@test');
+Route::get('/1', function () {
+    return view('pages.home');
+});
 
 
-Route::get('/currency/import', 'CurrencyController@import');
+//Route::get('/products/test', 'ProductController@test');
+
+Route::get('/test/run', 'TestController@run');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCurrenciesTable extends Migration
+class CreatePricesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateCurrenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currencies', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('name', 100);
-            $table->String('code', 4);
-            // $table->String('rate', 10);
-            
-            $table->timestamps();
 
-            // aplicam reguli
-            $table->unique('code');
+            $table->bigInteger('product_id')->nullable();
+            $table->bigInteger('currency_id')->nullable();
+
+            $table->decimal('value',11,2);
+            $table->boolean('discount');
+
+            $table->timestamps();
         });
     }
 
@@ -33,6 +33,6 @@ class CreateCurrenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currencies');
+        Schema::dropIfExists('prices');
     }
 }

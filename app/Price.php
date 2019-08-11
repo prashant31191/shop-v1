@@ -1,19 +1,21 @@
-<?php 
-    namespace App;
+<?php
 
-    class Price {
-        // public $value;
-        // public $currency;
+namespace App;
 
-        public function __construct(){
-            $this->value = $value;
-            $this->currency = $currency;
-        }
-       
-        public function __set($propr_name, $propr_value){ 
-            $this->$propr_name  = $propr_value;        
-        }
-        public function __get($propr_name){
-            return $this->$propr_name;        
-        }
+use Illuminate\Database\Eloquent\Model;
+
+class Price extends Model
+{
+    public function currency(){
+        return $this->hasOne(\App\Currency::class);        
     }
+
+    public function product(){
+        return $this->belongsTo(\App\Product::class);        
+    }
+
+
+}
+
+
+// Product->preturi->curency->rate

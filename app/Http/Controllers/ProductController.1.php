@@ -1,7 +1,6 @@
 <?php
     namespace App\Http\Controllers;
-    use App\Currency;
-
+    use App as App;
     use Faker\Factory as Faker;
 
     class ProductController extends Controller{
@@ -26,14 +25,26 @@
 
         public function test(){
             
-            $currencies = Currency::all()
-                            ->sortByDesc('code')
-                            ->pluck('code');
-                            
-            dump($currencies);
+            $faker = Faker::create();
 
+            $products = collect([]);
 
-            return "ok";
+            for ($n=0; $n < 4; $n++) {                 
+                $p = new App\Product();
+                $p->__set("name", $faker->name);
+                $p->__set("price",rand(100,1000)*10); 
+
+                for ($i=0; $i < rand(3,10); $i++) { 
+                    $p->addImage($faker->imageUrl(300, 400));
+                }
+
+                $products->push($p);
+            }
+            $c = new App\Currency("US Dolar", "USD");
+
+            // dd($c);
+
+            return view("products.test", ['products' => $products]);
 
         }
     }

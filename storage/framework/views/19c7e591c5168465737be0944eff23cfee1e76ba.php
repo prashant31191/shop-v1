@@ -1,0 +1,1 @@
+<h1>Welcome to our Shop</h1><?php /**PATH /opt/lampp/htdocs/shop-v1/resources/views/pages/home.blade.php ENDPATH**/ ?>

@@ -19,30 +19,30 @@
 <div class="container">    
     <div class="col">
         <div class="row">
-            @foreach ($products as $product)
+            <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                
                 <div class="col-lg-3 col-md-5 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-70">
 
-                        {{-- <a href="#"><img class="card-img-top" src="{{ $product->images->first() }}"></a> --}}
+                        
 
                         <div class="carousel">
-                            @foreach ($product->images as $image)     
-                                <img src="{{$image}}">                
-                            @endforeach                                                   
+                            <?php $__currentLoopData = $product->images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>     
+                                <img src="<?php echo e($image); ?>">                
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                                                   
                         </div>
 
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">{{ $product->name }}</a>
+                                <a href="#"><?php echo e($product->name); ?></a>
                             </h4>
-                            <h5>MDL {{ $product->price }}</h5>
+                            <h5>MDL <?php echo e($product->price); ?></h5>
                         </div>
 
                     </div>
                 </div>            
 
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         </div>
     </div>
@@ -62,3 +62,4 @@
         });
     });
 </script>
+<?php /**PATH /opt/lampp/htdocs/shop-v1/resources/views/products/test.blade.php ENDPATH**/ ?>
