@@ -3,32 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Currency,CurrencyRate};
+use App\{Currency,CurrencyRate,Product,Price};
 
 class TestController extends Controller
 {
-    //
-
+  
     public function run()
     {
 
-        // $c1 = Currency::create([
-        //     'name' => 'US Dollar',
-        //     'code' => 'USD',
-        // ]);
+        $product = Product::create([
+            'name' => 'iPhone 7',
+            'description' => 'Super phone',
+        ]);
 
-        // $cr1 = CurrencyRate::create([
-        //     'rate' => 18.501,
-        // ]);
+        $product_price = Price::create([
+            'value' => 320.40,
+            'discount' => true,
+        ]);
 
-        $c1 = Currency::find(1);
+        $currency = Currency::create([
+            'name' => 'US Dollar',
+            'code' => 'USD',
+        ]);
 
-        
-        //$c1->rates()->save($cr1);
-        dump($c1->rates->sortByDesc('created_at')->first());
+        $currency_rate = CurrencyRate::create([
+            'rate' => 19.501,
+        ]);
+
+        $product->prices()->save($product_price);
+        $currency->rates()->save($currency_rate);
+
+        $product_price->currency()->save($currency);
+
+
+
+        //$currency = Currency::find(1);        
+        $p1 = Product::find(1);        
+
+        dump($p1->prices()->first()->currency);
 
         // $c1->rates; // get data
         // $c1->rates(); // get object of relation
 
     }
+
+  
+
 }

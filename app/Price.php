@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Price extends Model
 {
+    protected $fillable = ['price', 'value', 'discount']; 
+
     public function currency(){
-        return $this->hasOne(\App\Currency::class);        
+        return $this->hasMany(\App\Currency::class);        
     }
 
     public function product(){
@@ -18,4 +20,4 @@ class Price extends Model
 }
 
 
-// Product->preturi->curency->rate
+// Product->price->curency->rate

@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             // aici descriem structura tabelului
             $table->bigIncrements('id');
+
             $table->String('name', 200);
             $table->String('description');
 

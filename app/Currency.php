@@ -14,6 +14,10 @@ class Currency extends Model
         return $this->hasMany(\App\CurrencyRate::class);
     }
 
+    public function price(){
+        return $this->belongsTo(\App\Price::class);        
+    }
+
 
     //
 }
