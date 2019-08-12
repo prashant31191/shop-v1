@@ -9,7 +9,7 @@ class Price extends Model
     protected $fillable = ['price', 'value', 'discount']; 
 
     public function currency(){
-        return $this->hasMany(\App\Currency::class);        
+        return $this->belongsTo(\App\Currency::class);        
     }
 
     public function product(){

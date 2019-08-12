@@ -17,3 +17,4 @@ Route::get('/1', function () {
 //Route::get('/products/test', 'ProductController@test');
 
 Route::get('/test/run', 'TestController@run');
+Route::get('/test/run2', 'TestController@run2');

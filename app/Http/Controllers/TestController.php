@@ -12,31 +12,33 @@ class TestController extends Controller
     {
 
         $product = Product::create([
-            'name' => 'iPhone 7',
-            'description' => 'Super phone',
+            'name' => 'iPhone 8',
+            'description' => 'Super Mega phone',
         ]);
 
-        $product_price = Price::create([
-            'value' => 320.40,
+        $price = Price::create([
+            'value' => 1720.40,
             'discount' => true,
         ]);
 
         $currency = Currency::create([
-            'name' => 'US Dollar',
-            'code' => 'USD',
+            'name' => ' Dollar',
+            'code' => 'UdD',
         ]);
 
         $currency_rate = CurrencyRate::create([
-            'rate' => 19.501,
+            'rate' => 17.501,
         ]);
 
-        $product->prices()->save($product_price);
+        $product->prices()->save($price);
         $currency->rates()->save($currency_rate);
 
-        //$currency = Currency::find(1);        
-        $p1 = Product::find(1);        
+        $price->currency()->associate($currency);
 
-        dump($p1->prices()->first()->currency);
+        // $currency = Currency::find(1);        
+        // $p1 = Product::find(1);        
+
+        // dump($p1->prices()->first()->currency);
 
         // $c1->rates; // get data
         // $c1->rates(); // get object of relation
