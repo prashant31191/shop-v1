@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCurrencyRatesTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateCurrencyRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currency_rates', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('currency_id')->nullable(); // nu este oblicatoria de ase completa
-            $table->decimal('rate', 8,2);
-            
+            $table->String('fullname');
+
+            // $table->String('location');
+
+            $table->boolean('is_vip')->default(false);
+            $table->boolean('is_company')->default(false);
+
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ class CreateCurrencyRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency_rates');
+        Schema::dropIfExists('clients');
     }
 }

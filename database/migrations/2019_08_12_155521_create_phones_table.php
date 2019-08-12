@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCurrencyRatesTable extends Migration
+class CreatePhonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateCurrencyRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currency_rates', function (Blueprint $table) {
+        Schema::create('phones', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('currency_id')->nullable(); // nu este oblicatoria de ase completa
-            $table->decimal('rate', 8,2);
-            
+            $table->bigInteger('contact_data_id')->nullable();
+
+            $table->String('number', 15);
+            $table->boolean('is_mobile')->default(false);
+
+
             $table->timestamps();
         });
     }
@@ -30,6 +33,9 @@ class CreateCurrencyRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency_rates');
+        Schema::dropIfExists('phones');
     }
 }
+
+// asemanator cu phone de aadaugat email, social, 
+// 
