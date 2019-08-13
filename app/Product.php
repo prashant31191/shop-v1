@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'description']; 
+    protected $fillable = ['name', 'description', 'image']; 
 
     public function prices(){
         return $this->hasMany(\App\Price::class);

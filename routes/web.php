@@ -18,3 +18,5 @@ Route::get('/1', function () {
 
 Route::get('/test/run', 'TestController@run');
 Route::get('/test/run2', 'TestController@run2');
+
+Route::get('/import/product', 'ImportController@product');

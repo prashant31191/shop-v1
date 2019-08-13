@@ -20,7 +20,7 @@ class CreatePricesTable extends Migration
             $table->bigInteger('currency_id')->nullable();
 
             $table->decimal('value',11,2);
-            $table->boolean('discount');
+            $table->decimal('discount',5,2);
 
             $table->timestamps();
         });

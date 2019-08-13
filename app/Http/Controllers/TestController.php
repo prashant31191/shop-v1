@@ -23,7 +23,7 @@ class TestController extends Controller
 
         $currency = Currency::create([
             'name' => ' Dollar',
-            'code' => 'UdD',
+            'code' => 'AED',
         ]);
 
         $currency_rate = CurrencyRate::create([
@@ -32,14 +32,14 @@ class TestController extends Controller
 
         $product->prices()->save($price);
         $currency->rates()->save($currency_rate);
-
-        $price->currency()->associate($currency);
+        $currency->prices()->save($price);
 
         // $currency = Currency::find(1);        
         // $p1 = Product::find(1);        
 
         // dump($p1->prices()->first()->currency);
 
+        dump($currency);
         // $c1->rates; // get data
         // $c1->rates(); // get object of relation
 
@@ -80,7 +80,6 @@ class TestController extends Controller
 
         $contact_data->country()->associate($country);
 
-
         $contact_data->city()->associate($city); 
         $city->country()->associate($country);
         $city->save();
@@ -89,15 +88,6 @@ class TestController extends Controller
 
         $contact_data->save();
 
-
-        // xxx()->associates(enti)
-        // xxxx() this-> many()
-        // xxxx->save($entity)
-        
-
-
     }
-
-  
 
 }

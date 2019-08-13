@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
 
             $table->String('name', 200);
             $table->String('description');
+            $table->String('image')->nullable();
 
             $table->timestamps();
         });
