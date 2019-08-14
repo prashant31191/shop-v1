@@ -23,4 +23,8 @@ class ContactData extends Model
     public function client(){
         return $this->belongsTo(\App\Client::class);
     }
+
+    public function emails(){
+        return $this->hasMany(\App\Email::class);
+    }
 }

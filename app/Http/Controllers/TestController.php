@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product};
+use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Email};
 
 class TestController extends Controller
 {
@@ -73,8 +73,19 @@ class TestController extends Controller
             'number' => '+373 79000000',
         ]);
 
+        $email1 = Email::create([
+            'email' => 'name@domain.com',
+            'status' => true,
+        ]);
+
+        $email2 = Email::create([
+            'email' => 'supername@gmail.com',
+        ]);
 
         // legaturi
+        $contact_data->phones()->save($email1);
+        $contact_data->phones()->save($email2);
+
         $contact_data->phones()->save($phone1);
         $contact_data->phones()->save($phone2);
 
