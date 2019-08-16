@@ -4,7 +4,11 @@ INSTALLATION:
 2. update file ".env"
 3. composer update
 
-https://help.github.com/en/articles/adding-an-existing-project-to-github-using-the-command-line
+
+https://www.techempower.com/benchmarks/#section=data-r18&hw=ph&test=json
 
 
-https://www.techempower.com/benchmarks/
+
+admin/subscribes
+    ->Admin\ClientController$subscribes
+        -> view/admin/subscivers.blade
