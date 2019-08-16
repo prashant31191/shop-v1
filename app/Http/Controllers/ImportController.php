@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
 use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Region};
 
 class ImportController extends Controller
@@ -69,13 +71,15 @@ class ImportController extends Controller
 
     public function importEbay(){
 
+        $query = Input::post('query');
+
         // https://developer.ebay.com/DevZone/finding/HowTo/index.html
         // API request variables
         $endpoint = 'http://svcs.ebay.com/services/search/FindingService/v1';  // URL to call
         $version = '1.0.0';  // API version supported by your application
         $appid = 'SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f';  // Replace with your own AppID
         $globalid = 'EBAY-US';  // Global ID of the eBay site you want to search (e.g., EBAY-DE)
-        $query = 'iphone';  // You may want to supply your own query
+        // $query = 'iphone';  // You may want to supply your own query
         $safequery = urlencode($query);  // Make the query URL-friendly
         $i = '0';  // Initialize the item filter index to 0
 

@@ -15,7 +15,7 @@ Route::get('/products/delete/{id}', 'ProductController@delete');
 
 // import
 Route::get('/import/AliExpress', 'ImportController@importAliExpress');
-Route::get('/import/Ebay', 'ImportController@importEbay');
+Route::post('/import/Ebay', 'ImportController@importEbay');
 Route::get('/import/regions/{limit}', 'ImportController@regions');
 
 

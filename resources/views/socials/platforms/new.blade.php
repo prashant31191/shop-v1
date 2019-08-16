@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Social Platforms List')
+@section('title', 'New Social Platform')
 
 @section('content')
     <div class="container">
