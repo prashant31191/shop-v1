@@ -7,7 +7,7 @@
 
         <table class="table table-hover table-striped table-bordered">
             
-            {{ $i = 0 }}
+            @php($i = 0)
 
             @foreach ($var as $social)
 
@@ -31,7 +31,8 @@
 
                 </tr>
 
-                {{ $i++ }}
+                @php($i++)
+
             @endforeach
       
         </table>
