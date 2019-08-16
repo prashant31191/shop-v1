@@ -9,9 +9,8 @@
 
         <form action="{{ route('client.subscribe') }}" method="POST">
 
-            {{ csrf_field() }}            
+            {{ csrf_field() }} 
             
-
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
