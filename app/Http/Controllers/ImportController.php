@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product};
+use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Region};
 
 class ImportController extends Controller
 {
-    public function productAliExpress(){
-
+    public function importAliExpress(){
 
         $keyword = "iphone";
 
         $content = file_get_contents("http://gw.api.alibaba.com/openapi/param2/2/portals.open/api.listPromotionProduct/92400?fields=productId,productTitle,productUrl,imageUrl,originalPrice,salePrice,discount,evaluateScore,commission,commissionRate,30daysCommission,volume,packageType,lotNum,validTime,storeName,storeUrl,allImageUrls&keywords=$keyword&localCurrency=USD&originalPriceTo=999&highQualityItems=true");
         $details = json_decode($content);
-
         
         //dump($details->result->products);
+
+        Currency::truncate();
 
         $currency = Currency::create([
             'name' => 'US Dollar',
@@ -56,12 +56,14 @@ class ImportController extends Controller
             $currency->rates()->save($currency_rate);
             $currency->prices()->save($price);
 
-            print "title: ".$title;
-            print "<br>price: ".$original_price;
-            print "<br>discount: ".$discount;
-            print "<br><img style=\"height: 100px;\" src=\"$image\">";
+            // print "title: ".$title;
+            // print "<br>price: ".$original_price;
+            // print "<br>discount: ".$discount;
+            // print "<br><img style=\"height: 100px;\" src=\"$image\">";
 
-        }        
+        }   
+        
+        return redirect()->to('/products/list');
 
     }
 
@@ -142,6 +144,7 @@ class ImportController extends Controller
         $results = '';
 
             // var_dump($resp);
+            Currency::truncate();
 
             $currency = Currency::create([
                 'name' => 'US Dollar',
@@ -178,11 +181,11 @@ class ImportController extends Controller
                 $currency->rates()->save($currency_rate);
                 $currency->prices()->save($price);
     
-                print "title: ".$title;
-                print "<br>description: ".$description;
-                print "<br>price: ".$p_price;
+                // print "title: ".$title;
+                // print "<br>description: ".$description;
+                // print "<br>price: ".$p_price;
                 // print "<br>discount: ".$discount;
-                print "<br><img style=\"height: 100px;\" src=\"$image\">";
+                // print "<br><img style=\"height: 100px;\" src=\"$image\">";
 
             }
         }
@@ -192,24 +195,59 @@ class ImportController extends Controller
             $results .= "AppID for the Production environment.</h3>";
         }
 
+        return redirect()->to('/products/list');
+
     }
 
-    public function countries(){
-        $content = file_get_contents("http://battuta.medunes.net/api/country/all/?key=8c6abeaf587fd79128b443c9f6c8542b");
-        $details = json_decode($content);
-        
-        foreach ($details as $detail) {
-            dump($detail->name);
-        }
+    public function regions($limit = 3){
+        ini_set('max_execution_time', 600); //6 minutes
 
-        $content = file_get_contents("http://battuta.medunes.net/api/country/all/?key=8c6abeaf587fd79128b443c9f6c8542b");
-        $details = json_decode($content);
+        $api_key = "af142d0fc8fe7e42110807cf90550224";
+        // $api_key = "8c6abeaf587fd79128b443c9f6c8542b";
+
+        $country_content = file_get_contents("http://battuta.medunes.net/api/country/all/?key=$api_key");
+        $country_details = json_decode($country_content);
         
-        foreach ($details as $detail) {
-            dump($detail->name);
-        }
+        // $limit = 3;
+        $i = 1;
+
+        shuffle($country_details);
+
+        foreach ($country_details as $country_detail) {
+
+            $country = Country::create([
+                'name' => $country_detail->name,
+                'code' => $country_detail->code,
+            ]);
+            $country->save();
+
+            $region_content = file_get_contents("http://battuta.medunes.net/api/region/$country_detail->code/all/?key=$api_key");
+            $region_details = json_decode($region_content);       
+            
+            foreach ($region_details as $region_detail) {
+
+                $region = Region::create([
+                    'region' => $region_detail->region,
+                ]);
+
+                $region->country()->associate($country);
+                $region->save();    
+   
+                // dd($region);                
+            }
+
+            if ($i < $limit) {
+                dump($country_detail);
+            }else{
+                return redirect()->to('/listregion/countries');
+            }
+
+
+            $i++;
+        }   
+
         
-        
+
     }
 
 }
@@ -221,3 +259,6 @@ class ImportController extends Controller
 
 // API Apiexpress 
 // https://portals.aliexpress.com/help/help_center_API.html?spm=a2g01.8078014.0.0.583c5ef1oaARRg
+
+// API ebay
+// https://developer.ebay.com/Devzone/finding/CallRef/index.html

@@ -8,8 +8,8 @@ class City extends Model
 {
     protected $fillable = ['name', 'code'];  
 
-    public function country(){
-        return $this->belongsTo(\App\Country::class);
+    public function region(){
+        return $this->belongsTo(\App\Regions::class);
     }
 
     public function contactDatas(){

@@ -9,8 +9,8 @@ class Country extends Model
 
     protected $fillable = ['name', 'code']; 
      
-    public function cities(){
-        return $this->hasMany(\App\Country::class);
+    public function regions(){
+        return $this->hasMany(\App\Region::class);
     }
 
     public function contactDatas(){

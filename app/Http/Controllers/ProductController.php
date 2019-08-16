@@ -1,6 +1,6 @@
 <?php
     namespace App\Http\Controllers;
-    use App\Currency;
+    use App\{Currency,Product};
 
     use Faker\Factory as Faker;
 
@@ -35,6 +35,16 @@
 
             return "ok";
 
+        }
+
+        public function list(){
+            $products = Product::orderByDesc('id')->get()->toArray();    
+            return view("products.list", ['var' => $products]);
+        }
+
+        public function delete($id){
+            Product::where('id', $id)->delete();
+            return redirect()->to('/products/list');
         }
     }
 

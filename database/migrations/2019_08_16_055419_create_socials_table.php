@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCitiesTable extends Migration
+class CreateSocialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('socials', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('region_id')->nullable();
-            $table->String('name', 60);
-            $table->String('code', 4)->nullable()->unique();
-            
+            $table->bigInteger('social_platform_id')->nullable();
+            $table->bigInteger('contact_data_id')->nullable();
+
+            $table->string('nickname')->nullable();
+       
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('socials');
     }
 }
