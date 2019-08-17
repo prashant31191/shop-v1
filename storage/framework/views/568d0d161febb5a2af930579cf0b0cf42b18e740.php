@@ -2,6 +2,8 @@
 
 <?php $__env->startSection('content'); ?>
 
+    <h2 class="text-center"><a href="<?php echo e(route('admin.import.aliexpress')); ?>">Import Products from AliExpress</a> </h2>
+
     <table id="example" class="ui celled table" style="width:100%">
         <thead>
             <tr>

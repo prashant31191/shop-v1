@@ -1,21 +1,15 @@
 <?php
-    namespace App\Http\Controllers;
-    
-    use App\{Currency,Product};
-    use App\Http\Controllers\Controller;
+    namespace App\Http\Controllers\Pub;
 
-    use Faker\Factory as Faker;
+    use App\Http\Controllers\Controller;
+    use App\{Currency,Product};
 
     class ProductController extends Controller{
 
-        public function list(){
+        public function products(){            
             $products = Product::orderByDesc('id')->get()->toArray();    
-            return view("products.list", ['var' => $products]);
+            return view("public.products.list", ['details' => $products]);
         }
 
-        public function delete($id){
-            Product::where('id', $id)->delete();
-            return redirect()->to('/products/list');
-        }
     }
 

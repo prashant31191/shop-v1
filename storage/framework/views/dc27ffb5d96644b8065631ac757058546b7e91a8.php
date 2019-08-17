@@ -2,6 +2,8 @@
 
 <?php $__env->startSection('content'); ?>
 
+    <h2 class="text-center"><a href="<?php echo e(route('admin.import.regions')); ?>">Import Countries+Regions</a> </h2>
+
     <table id="example" class="ui celled table" style="width:100%">
         <thead>
             <tr>

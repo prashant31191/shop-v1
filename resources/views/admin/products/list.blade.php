@@ -3,6 +3,8 @@
 
 @section('content')
 
+    <h2 class="text-center"><a href="{{ route('admin.import.aliexpress') }}">Import Products from AliExpress</a> </h2>
+
     <table id="example" class="ui celled table" style="width:100%">
         <thead>
             <tr>

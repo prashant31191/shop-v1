@@ -3,6 +3,8 @@
 
 @section('content')
 
+    <h2 class="text-center"><a href="{{ route('socials.new') }}">Create New Social Account </a> </h2>
+
     <table id="example" class="ui celled table" style="width:100%">
         <thead>
             <tr>

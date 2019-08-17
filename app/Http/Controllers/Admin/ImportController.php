@@ -246,7 +246,7 @@ class ImportController extends Controller
             if ($i < $limit) {
                 dump($country_detail);
             }else{
-                return redirect()->to('admin/countries');
+                return redirect()->to('admin/countries/list');
             }
 
 
@@ -263,10 +263,8 @@ class ImportController extends Controller
             $email = Email::create([
                 'email' => $faker->email,
             ]);
-        }
-        
+        }        
         return redirect()->to('admin/subscribes/list');
-
     }
 
 }

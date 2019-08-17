@@ -13,7 +13,7 @@ class ClientController extends Controller
 {
     public function subscribeForm(){
         
-        return view("layouts.subscribe");
+        return view("public.subscribe");
     }
 
     public function subscribe2(){
@@ -28,9 +28,8 @@ class ClientController extends Controller
             'email' => $request->email
         ]);
 
-
         $email = $request->input("email");
-
+        return view("public.subscribed", ['email' => $email]);
 
     }
 

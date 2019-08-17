@@ -17,7 +17,7 @@ class ClientController extends Controller
     }
 
     public function deleteSubscriber($id){
-        Client::where('id', $id)->delete();
+        Email::where('id', $id)->delete();
         return redirect()->to('admin/subscribes/list');
     }
 

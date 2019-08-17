@@ -6,6 +6,9 @@ Route::get('/', function(){
 
 // SUBSCRIBERS
 Route::get('/subscribe', 'ClientController@subscribeForm')->name('subscribe');
-Route::post('/subscribe', 'Pub\ClientController@subscribe');
+Route::post('/subscribe', 'ClientController@subscribe');
 
+
+// PRODUCTS
+Route::get('/products', 'ProductController@products')->name('products');
 

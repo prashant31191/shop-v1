@@ -3,6 +3,8 @@
 
 @section('content')
 
+    <h2 class="text-center"><a href="{{ route('socials.platforms.new') }}">Add New Social Platforms</a> </h2>
+
     <table id="example" class="ui celled table" style="width:100%">
         <thead>
             <tr>

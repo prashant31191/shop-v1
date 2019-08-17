@@ -16,6 +16,10 @@
         padding-top: 70px; 
         padding-bottom: 70px;
     }
+    .container {
+        max-width: 2520px;
+        margin: 20px;
+    }
     </style>
 
     <title>@yield('title')</title>
@@ -45,17 +49,15 @@
                     </div>
                 </li>       
         
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Products</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('products') }}">All Products</a>
+                    </div>
+                </li>     
+            </ul>
+        
 
-            </ul>
-        
-            <ul class="ml-auto mb-1">                
-                <form method="post" class="form-inline" action="{{ route('admin.import.ebay') }}">
-                    {{ csrf_field() }}
-        
-                    <input class="form-control mr-sm-2" type="text" name="query" placeholder="Keyword ...">
-                    <button class="btn btn-success" type="submit">Import from Ebay</button>
-                </form>        
-            </ul>
         
         </nav>        
         
