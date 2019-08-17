@@ -81,10 +81,6 @@
                 </li> 
 
             </ul>
-        
-            <ul class="m-auto mb-1">                
-                <span>Admin Dashboard</span>
-            </ul>
 
             <ul class="ml-auto mb-1">                
                 <form method="post" class="form-inline" action="{{ route('admin.import.ebay') }}">
@@ -102,8 +98,29 @@
             @yield('content')       
         </div>
         <!-- Footer -->
-        <footer class="page-footer bg-info mb-1 mt-3 p-1 fixed-bottom">
-            <div class="text-center text-warning">
+        <footer class="page-footer bg-info mb-1 mt-3 p-1 fixed-bottom navbar navbar-expand-lg navbar-dark">
+
+            <ul class="navbar-nav pl-5">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop-v1/public/admin">Admin</a>
+                </li>        
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop-v1/public">Public</a>
+                </li>    
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop-v1/public/profile">Profile</a>
+                </li> 
+        
+            </ul>
+        
+            <ul class="m-auto mb-1">                
+                <span>Admin Dashboard</span>
+            </ul>
+
+            <div class="text-center text-warning pr-5">
                     {{ (microtime(true) - LARAVEL_START) }} sec
             </div>
         </footer>

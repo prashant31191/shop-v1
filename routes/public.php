@@ -1,9 +1,11 @@
 <?php
 
-Route::get('/', function () {
-    return view('layouts.app');
+Route::get('/', function(){
+    return view('public.dashboard');
 });
 
+// SUBSCRIBERS
+Route::get('/subscribe', 'ClientController@subscribeForm')->name('subscribe');
+Route::post('/subscribe', 'Pub\ClientController@subscribe');
 
-Route::get('/subscribe', 'ClientController@subscribeForm')->name('client.subscribe');
-Route::post('/subscribe', 'ClientController@subscribe');
+
