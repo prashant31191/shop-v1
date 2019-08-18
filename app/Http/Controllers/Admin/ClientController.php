@@ -21,8 +21,10 @@ class ClientController extends Controller
         $items_per_page = $request->per_page ?? 10;
         $sortby = $request->sortby ?? 'id';
         $order = $request->order ?? 'ASC';
+        $email_search = $request->email_search ?? '';
 
-        $emails = Email::orderBy($sortby, $order)->paginate($items_per_page);
+        $emails = Email::where('email', 'like', '%' . $email_search . '%')
+                        ->orderBy($sortby, $order)->paginate($items_per_page);
 
         $total_items = $emails->total();
 

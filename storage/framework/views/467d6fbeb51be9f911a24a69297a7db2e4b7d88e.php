@@ -9,6 +9,8 @@
         $per_page = app('request')->input('per_page') ?? 10;
         $page = app('request')->input('page') ?? 1;
         $order = app('request')->input('order') ?? 'DESC';
+        $sortby = app('request')->input('sortby') ?? 'id';
+        $email_search = app('request')->input('email_search') ?? '';
 
         if ($order == 'DESC') {
             $order = 'ASC';
@@ -22,7 +24,6 @@
         if ($page_start == 0) {
             $page_start = 1;
             $page_end = $per_page;
-            print "herh";
         }
         
     ?>
@@ -51,9 +52,13 @@
     <table class="ui celled table" style="width:100%">
         <thead>
             <tr>                
-                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=id&order=<?php echo e($order); ?>">id</a></th>
-                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=email&order=<?php echo e($order); ?>">email</a></th>
-                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=created_at&order=<?php echo e($order); ?>">created_at</a></th>
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?per_page=<?php echo e($per_page); ?>&sortby=id&order=<?php echo e($order); ?>">id <i class="fas fa-arrows-alt-v"></i></a></th>
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?per_page=<?php echo e($per_page); ?>&sortby=email&order=<?php echo e($order); ?>">email <i class="fas fa-arrows-alt-v"></i></a>
+                <form>
+                    <input type="text" name="email_search">
+                </form>
+                </th>
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?per_page=<?php echo e($per_page); ?>&sortby=created_at&order=<?php echo e($order); ?>">created_at <i class="fas fa-arrows-alt-v"></i></a></th>
                 <th></th>
                 <th></th>                 
             </tr>
@@ -77,7 +82,14 @@
     <hr>
 
     <div class="d-flex justify-content-center">
-        <?php echo e($emails->appends(['per_page' => $items_per_page])->links()); ?>
+        <?php echo e($emails->appends(
+            [
+                'per_page' => $items_per_page,
+                'order' => $order,
+                'email_search' => $email_search,
+                'sortby' => $sortby,
+            ]
+        )->links()); ?>
 
     </div>
 
