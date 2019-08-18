@@ -39,22 +39,20 @@
 
     <table class="ui celled table" style="width:100%">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>EMAIL</th>
-                <th>STATUS</th>
-                <th>CREATED</th>
+            <tr>                
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=id">id</a></th>
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=email">email</a></th>
+                <th><a class="dropdown-item" href="<?php echo e(route('admin.subscribes')); ?>?sortby=created_at">created_at</a></th>
                 <th></th>
                 <th></th>                 
             </tr>
         </thead>
         
         <tbody>            
-            <?php $__currentLoopData = $details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detail): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>                
+            <?php $__currentLoopData = $emails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $detail): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>                
                 <tr> 
                     <td><?php echo e($detail->id); ?> </td>
                     <td><?php echo e($detail->email); ?> </td>
-                    <td><?php echo e($detail->status); ?> </td>
                     <td><?php echo e($detail->created_at); ?> </td>
 
                     <td><a href="edit/<?php echo e($detail['id']); ?>">EDIT</a></td>
@@ -68,7 +66,7 @@
     <hr>
 
     <div class="d-flex justify-content-center">
-        <?php echo e($details->appends(['per_page' => $items_per_page])->links()); ?>
+        <?php echo e($emails->appends(['per_page' => $items_per_page])->links()); ?>
 
     </div>
 

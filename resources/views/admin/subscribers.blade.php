@@ -40,22 +40,20 @@
 
     <table class="ui celled table" style="width:100%">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>EMAIL</th>
-                <th>STATUS</th>
-                <th>CREATED</th>
+            <tr>                
+                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?sortby=id">id</a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?sortby=email">email</a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?sortby=created_at">created_at</a></th>
                 <th></th>
                 <th></th>                 
             </tr>
         </thead>
         
         <tbody>            
-            @foreach ($details as $detail)                
+            @foreach ($emails as $detail)                
                 <tr> 
                     <td>{{ $detail->id }} </td>
                     <td>{{ $detail->email }} </td>
-                    <td>{{ $detail->status }} </td>
                     <td>{{ $detail->created_at }} </td>
 
                     <td><a href="edit/{{ $detail['id'] }}">EDIT</a></td>
@@ -69,7 +67,7 @@
     <hr>
 
     <div class="d-flex justify-content-center">
-        {{ $details->appends(['per_page' => $items_per_page])->links() }}
+        {{ $emails->appends(['per_page' => $items_per_page])->links() }}
     </div>
 
 

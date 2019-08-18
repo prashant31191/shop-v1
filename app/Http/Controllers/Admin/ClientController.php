@@ -16,13 +16,17 @@ class ClientController extends Controller
         return view("admin.subscribers", ['details' => $emails]);
     }
 
-    public function subscribes(Request $request){        
+    public function subscribes(Request $request){     
 
         $items_per_page = $request->per_page ?? 10;
-        $emails = Email::paginate($items_per_page);
+        $sortby = $request->sortby ?? 'id';
+        $order = $request->order ?? 'ASC';
+
+        $emails = Email::orderBy($sortby, $order)->paginate($items_per_page);
+
         $total_items = $emails->total();
 
-        return view("admin.subscribers", ['details' => $emails, 'items_per_page' => $items_per_page, 'total_items' => $total_items]);
+        return view("admin.subscribers", compact('emails', 'items_per_page', 'total_items', 'sortby', 'order'));
 
     }
 
