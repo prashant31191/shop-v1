@@ -11,9 +11,19 @@ use App\{Email,Client};
 
 class ClientController extends Controller
 {
-    public function subscribes(Request $request){        
+    public function subscribesOld(Request $request){        
         $emails = Email::orderByDesc('id')->get()->toArray();    
         return view("admin.subscribers", ['details' => $emails]);
+    }
+
+    public function subscribes(Request $request){        
+
+        $items_per_page = $request->per_page ?? 10;
+        $emails = Email::paginate($items_per_page);
+        $total_items = $emails->total();
+
+        return view("admin.subscribers", ['details' => $emails, 'items_per_page' => $items_per_page, 'total_items' => $total_items]);
+
     }
 
     public function deleteSubscriber($id){
