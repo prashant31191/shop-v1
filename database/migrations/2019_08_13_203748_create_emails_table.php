@@ -18,6 +18,7 @@ class CreateEmailsTable extends Migration
 
             $table->bigInteger('contact_data_id')->nullable();
             $table->String('email')->unique();
+            
             $table->boolean('status')->default(false);
 
             $table->timestamps();
