@@ -25,11 +25,12 @@ class ClientController extends Controller
     public function subscribe(Request $request){
         
         Email::create([
-            'email' => $request->email
+            'email' => $request->email,
+            'status' => true
         ]);
 
         $email = $request->input("email");
-        return view("public.subscribed", ['email' => $email]);
+        return view("public.subscribed", compact('email') );
 
     }
 

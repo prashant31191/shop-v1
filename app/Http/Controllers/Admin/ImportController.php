@@ -259,11 +259,13 @@ class ImportController extends Controller
     public function emails(){
         $faker = Faker::create();
         
-        for ($i=0; $i < 100; $i++) { 
+
+        for ($i=0; $i < 50; $i++) { 
             $email = Email::create([
                 'email' => $faker->email,
+                'status' => rand(0,1)
             ]);
-        }        
+        }          
         return redirect()->to('admin/subscribes/list');
     }
 
@@ -278,4 +280,4 @@ class ImportController extends Controller
 // https://portals.aliexpress.com/help/help_center_API.html?spm=a2g01.8078014.0.0.583c5ef1oaARRg
 
 // API ebay
-// https://developer.ebay.com/Devzone/finding/CallRef/index.html
+// https://developer.ebay.com/Devzone/finding/CallRef/index.html                    <td>{{ $detail->status }} </td>

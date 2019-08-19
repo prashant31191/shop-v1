@@ -2,102 +2,57 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
-use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Email};
+use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Email, Category};
+
+use Faker\Factory as Faker;
 
 class TestController extends Controller
 {
   
-    public function run2()
-    {
-
-        $product = Product::create([
-            'name' => 'iPhone 8',
-            'description' => 'Super Mega phone',
-        ]);
-
-        $price = Price::create([
-            'value' => 1720.40,
-            'discount' => true,
-        ]);
-
-        $currency = Currency::create([
-            'name' => ' Dollar',
-            'code' => 'AED',
-        ]);
-
-        $currency_rate = CurrencyRate::create([
-            'rate' => 17.501,
-        ]);
-
-        $product->prices()->save($price);
-        $currency->rates()->save($currency_rate);
-        $currency->prices()->save($price);
-
-        // $currency = Currency::find(1);        
-        // $p1 = Product::find(1);        
-
-        // dump($p1->prices()->first()->currency);
-
-        dump($currency);
-        // $c1->rates; // get data
-        // $c1->rates(); // get object of relation
-
-    }
+    public function test(){
 
 
-    public function run(){
+        // Category::truncate();
+        
+        // $category1 = Category::create([
+        //     'name' => 'Porumb',
+        //     //'name' => $faker->name,
+        // ]);
 
-        $client = Client::create([
-            'fullname' => 'mike Smith'
-        ]);
+        // $category2 = Category::create([
+        //     'name' => 'Pop Corn',
+        // ]);
 
-        $contact_data = ContactData::create();
+        // $category3 = Category::create([
+        //     'name' => 'Pop Corn Sarat',
+        // ]);
 
-        $country = Country::create([
-            'name' => 'Republic of Moldova',
-            'code' => 'MD',
-        ]);
+        // $category4 = Category::create([
+        //     'name' => 'Pop Corn Dulce',
+        // ]);
 
-        $city = City::create([
-            'name' => 'Chisinau',
-            'code' => 'C',
-        ]);
+        // $category1->children()->save($category2);
 
-        $phone1 = Phone::create([
-            'number' => '+373 69000000',
-            'is_mobile' => true,
-        ]);
+        // $category3->parent()->associate($category2);
+        // $category3->save();
 
-        $phone2 = Phone::create([
-            'number' => '+373 79000000',
-        ]);
+        // $category4->parent()->associate($category1);
+        // $category4->save();
 
-        $email1 = Email::create([
-            'email' => 'name@domain.com',
-            'status' => true,
-        ]);
 
-        $email2 = Email::create([
-            'email' => 'supername@gmail.com',
-        ]);
+        $result = Category::where('name', 'Porumb')->get();
 
-        // legaturi
-        $contact_data->phones()->save($email1);
-        $contact_data->phones()->save($email2);
 
-        $contact_data->phones()->save($phone1);
-        $contact_data->phones()->save($phone2);
 
-        $contact_data->country()->associate($country);
+        //dd($result->first()->children);
 
-        $contact_data->city()->associate($city); 
-        $city->country()->associate($country);
-        $city->save();
+        foreach ($result->first()->children as $key => $value) {
+            print $value."<br>";
+        }
 
-        $contact_data->client()->associate($client);
-
-        $contact_data->save();
 
     }
 

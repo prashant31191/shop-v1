@@ -24,6 +24,7 @@ class ClientController extends Controller
         $email_search = $request->email_search ?? '';
 
         $emails = Email::where('email', 'like', '%' . $email_search . '%')
+                        ->where('status', 1)
                         ->orderBy($sortby, $order)->paginate($items_per_page);
 
         $total_items = $emails->total();
