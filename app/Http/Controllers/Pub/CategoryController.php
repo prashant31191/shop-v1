@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Pub;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,19 +13,14 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-
-        $items_per_page = $request->per_page ?? 10;
-        $sortby = $request->sortby ?? 'id';
-        $order = $request->order ?? 'ASC';
-
-        $categories = Category::orderBy($sortby, $order)->paginate($items_per_page);
-
-        $total_items = $categories->total();
-
-        // dd($total_items);
-        return view("admin.categories", compact('categories', 'items_per_page', 'total_items', 'sortby', 'order'));
+     
+        $categories = Category::where('category_id', NULL)->get();
+        $all_categories = Category::pluck('id', 'name')->all();
+ 
+        // dd($categories);
+        return view('public.categories',compact('categories', 'all_categories'));
     }
 
     /**

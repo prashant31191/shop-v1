@@ -3,15 +3,11 @@
 
 @section('content')
 
-    <h2 class="text-center"><a href="{{ route('admin.import.emails') }}">Generate Subscribers(100) </a> </h2>
-
-
     @php
         $per_page = app('request')->input('per_page') ?? 10;
         $page = app('request')->input('page') ?? 1;
         $order = app('request')->input('order') ?? 'DESC';
         $sortby = app('request')->input('sortby') ?? 'id';
-        $email_search = app('request')->input('email_search') ?? '';
 
         if ($order == 'DESC') {
             $order = 'ASC';
@@ -36,12 +32,12 @@
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Items Per Page</button>
             
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=5">5</a>
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=10">10</a>
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=25">25</a>
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=50">50</a>
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=100">100</a>
-                <a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page=1000">1000</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=5">5</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=10">10</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=25">25</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=50">50</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=100">100</a>
+                <a class="dropdown-item" href="{{ route('admin.categories') }}?per_page=1000">1000</a>
 
                 <div class="dropdown-divider"></div>
             </div>
@@ -53,23 +49,21 @@
     <table class="ui celled table" style="width:100%">
         <thead>
             <tr>                
-                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page={{ $per_page }}&sortby=id&order={{ $order }}">id <i class="fas fa-arrows-alt-v"></i></a></th>
-                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page={{ $per_page }}&sortby=email&order={{ $order }}">email <i class="fas fa-arrows-alt-v"></i></a>
-                <form>
-                    <input type="text" name="email_search">
-                </form>
-                </th>
-                <th><a class="dropdown-item" href="{{ route('admin.subscribes') }}?per_page={{ $per_page }}&sortby=created_at&order={{ $order }}">created_at <i class="fas fa-arrows-alt-v"></i></a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.categories') }}?per_page={{ $per_page }}&sortby=id&order={{ $order }}">id <i class="fas fa-arrows-alt-v"></i></a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.categories') }}?per_page={{ $per_page }}&sortby=category_id&order={{ $order }}">category_id <i class="fas fa-arrows-alt-v"></i></a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.categories') }}?per_page={{ $per_page }}&sortby=name&order={{ $order }}">name <i class="fas fa-arrows-alt-v"></i></a></th>
+                <th><a class="dropdown-item" href="{{ route('admin.categories') }}?per_page={{ $per_page }}&sortby=created_at&order={{ $order }}">created_at <i class="fas fa-arrows-alt-v"></i></a></th>
                 <th></th>
                 <th></th>                 
             </tr>
         </thead>
         
         <tbody>            
-            @foreach ($emails as $detail)                
+            @foreach ($categories as $detail)                
                 <tr> 
                     <td>{{ $detail->id }} </td>
-                    <td>{{ $detail->email }} </td>
+                    <td>{{ $detail->category_id }} </td>
+                    <td>{{ $detail->name }} </td>
                     <td>{{ $detail->created_at }} </td>
 
                     <td><a href="edit/{{ $detail['id'] }}">EDIT</a></td>
@@ -83,11 +77,10 @@
     <hr>
 
     <div class="d-flex justify-content-center">
-        {{ $emails->appends(
+        {{ $categories->appends(
             [
                 'per_page' => $items_per_page,
                 'order' => $order,
-                'email_search' => $email_search,
                 'sortby' => $sortby,
             ]
         )->links() }}

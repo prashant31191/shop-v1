@@ -10,7 +10,7 @@ Route::get('/test', 'TestController@test');
 
 // CATEGORIES
 Route::resource('/categories', 'CategoryController');
-
+Route::get('/categories', 'CategoryController@index')->name('admin.categories');
 
 
 // products
@@ -23,6 +23,9 @@ Route::get('/import/AliExpress', 'ImportController@importAliExpress')->name('adm
 Route::post('/import/Ebay', 'ImportController@importEbay')->name('admin.import.ebay');
 Route::get('/import/regions', 'ImportController@regions')->name('admin.import.regions');
 Route::get('/import/emails', 'ImportController@emails')->name('admin.import.emails');
+Route::get('/import/ebayCategories', 'ImportController@ebayCategories')->name('admin.import.ebayCategories');
+Route::get('/import/ebaySubCategories', 'ImportController@ebaySubCategories')->name('admin.import.ebaySubCategories');
+Route::get('/import/ebaySubSubCategories', 'ImportController@ebaySubSubCategories')->name('admin.import.ebaySubSubCategories');
 
 
 // Social Platforms

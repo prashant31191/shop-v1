@@ -20,6 +20,7 @@
         max-width: 2520px;
         margin: 20px;
     }
+    
     </style>
 
     <title>@yield('title')</title>
@@ -27,6 +28,9 @@
 </head>
 
   <body>
+
+
+
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-info mb-5 mt-1 fixed-top">
 
@@ -61,10 +65,29 @@
         
         </nav>        
         
+
+        <div class="container">
+            <div class="row">
+
+                <div class= "col-8">
+                    @yield('content')   
+                </div> 
+
+                <div class="col-3">
+                     @yield('sidebar')           
+                </div>
+
+            </div>
+        </div>
+
+
+{{--         
+
+
         <!-- navigation bar ends here -->      
         <div class="container">
             @yield('content')       
-        </div>
+        </div> --}}
         <!-- Footer -->
         <footer class="page-footer bg-info mb-1 mt-3 p-1 fixed-bottom navbar navbar-expand-lg navbar-dark">
 

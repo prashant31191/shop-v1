@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Input;
 
 use Faker\Factory as Faker;
 
-use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Region,Email};
+use App\{City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Region,Email,Category};
 
 class ImportController extends Controller
 {
@@ -140,7 +140,7 @@ class ImportController extends Controller
         $apicall .= "&SECURITY-APPNAME=$appid";
         $apicall .= "&GLOBAL-ID=$globalid";
         $apicall .= "&keywords=$safequery";
-        $apicall .= "&paginationInput.entriesPerPage=10";
+        $apicall .= "&paginationInput.entriesPerPage=20";
         // $apicall .= "$urlfilter";
 
         // Load the call and capture the document returned by eBay API
@@ -164,14 +164,30 @@ class ImportController extends Controller
 
             // If the response was loaded, parse it and build links  
             foreach($resp->searchResult->item as $item) {
+
+                // dd($item->primaryCategory);
+
                 $title = $item->title;
                 $description = $item->subtitle;
                 $image   = $item->galleryURL;
                 $link = $item->viewItemURL;
                 $p_price = $item->sellingStatus->currentPrice;
+                $category_id = $item->primaryCategory->categoryId;
+                $category_name = $item->primaryCategory->categoryName;
             
                 // For each SearchResultItem node, build a link and append it to $results
 
+
+                $category_exist = Category::where('name', $category_name)->get();
+
+                if ($category_exist->count() == 0) {
+                    $category = Category::create([
+                        // 'name' => 'Pop Corn Dulce',
+                        'name' => $category_name,
+                        'category_id' => $category_id,
+                    ]); 
+                }              
+              
                 $product = Product::create([
                     'name' => $title,
                     'description' => $description,
@@ -222,11 +238,21 @@ class ImportController extends Controller
 
         foreach ($country_details as $country_detail) {
 
-            $country = Country::create([
-                'name' => $country_detail->name,
-                'code' => $country_detail->code,
-            ]);
-            $country->save();
+            $country_exist = Country::where('name', $country_detail->name)->get();
+
+            if ($country_exist->count() == 0) {
+                $country = Country::create([
+                    'name' => $country_detail->name,
+                    'code' => $country_detail->code,
+                ]);
+            }  
+
+
+            // $country = Country::create([
+            //     'name' => $country_detail->name,
+            //     'code' => $country_detail->code,
+            // ]);
+            // $country->save();
 
             $region_content = file_get_contents("http://battuta.medunes.net/api/region/$country_detail->code/all/?key=$api_key");
             $region_details = json_decode($region_content);       
@@ -269,6 +295,154 @@ class ImportController extends Controller
         return redirect()->to('admin/subscribes/list');
     }
 
+    public function ebayCategories(){
+       
+        $limit = 5;
+           
+
+        $primary_categories = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=-1&IncludeSelector=ChildCategories");
+        
+        foreach ($primary_categories->CategoryArray as $primary_category) {
+            // dd($primary_category);
+
+            
+            $i = 0;     
+            foreach ($primary_category as $category) {
+                if ($i>$limit) {
+                    die;
+                }
+                
+                // print $category->CategoryID . " - ";
+                // print $category->CategoryLevel . " - ";
+                // print $category->CategoryName . " - ";
+                // print $category->CategoryParentID . " - ";
+                // print $category->LeafCategory . "<br>";
+                // dd($primary_category);
+
+                $category_exist = Category::where('name', $category->CategoryName)->get();
+                // dd($category->CategoryID );
+
+                if ( ($category_exist->count() == 0) && ($category->CategoryID >= 0) ) {
+             
+                    // dd($category->CategoryID );
+                    $category = Category::create([
+
+                        // 'name' => 'Pop Corn Dulce',
+                        'name' => $category->CategoryName,
+                        'category_id' => NULL,
+                        'id' => $category->CategoryID,
+                    ]); 
+                    // dd($category);
+
+                }  
+
+            
+                $i++;
+
+            }
+        }
+        
+    }
+
+    public function ebaySubCategories(){
+       
+        $limit = 3;
+       
+        $categories = Category::get('id');
+        // var_dump($categories);
+        
+        foreach ($categories as $key) {
+
+        
+        // dd($key->id);
+     
+            $subcategories = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
+            //  dd($subcategories);
+
+            foreach ($subcategories->CategoryArray as $subcategory) {                
+                $i = 0;
+                foreach ($subcategory as $sub) { 
+
+                    if ($i>$limit) {
+                        break;
+                    }
+                    // dd($sub);
+         
+                    $category_exist = Category::where('name', $sub->CategoryName)->get();
+    
+                    if ( !($category_exist->count() > 0)  ) {
+        
+                        // dd($category_exist);
+                        $category = Category::create([    
+                            // 'name' => 'Pop Corn Dulce',
+                            'name' => $sub->CategoryName,
+                            'category_id' => $key->id,
+                            // 'id' => $category->CategoryID,
+                        ]); 
+    
+                    }     
+                    // dd($category);
+                    $i++;   
+                }
+                 
+            }
+
+            // var_dump($sub);
+                 
+        }        
+        
+    }
+
+    public function ebaySubSubCategories(){
+       
+        $limit = 2;
+        
+        $categories = Category::where('category_id', '<>', 'NULL')->get('id');
+        // var_dump($categories);
+        
+        foreach ($categories as $key) {
+        
+        // dd($key->id);
+     
+            $subcategories = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
+            //  dd($subcategories);
+
+            foreach ($subcategories->CategoryArray as $subcategory) {                
+
+                $i = 0;
+
+                foreach ($subcategory as $sub) { 
+
+                    if ($i>$limit) {
+                        break;
+                    }
+                    // dd($sub);
+         
+                    $category_exist = Category::where('name', $sub->CategoryName)->get();
+    
+                    if ( !($category_exist->count() > 0)  ) {
+        
+                        // dd($category_exist);
+                        $category = Category::create([    
+                            // 'name' => 'Pop Corn Dulce',
+                            'name' => $sub->CategoryName,
+                            'category_id' => $key->id,
+                            // 'id' => $category->CategoryID,
+                        ]); 
+    
+                    }     
+                    // dd($category);
+                    $i++;   
+                }
+                 
+            }
+
+            // var_dump($sub);
+                 
+        }        
+        
+    }
+
 }
 
 // countries and cities
@@ -280,4 +454,7 @@ class ImportController extends Controller
 // https://portals.aliexpress.com/help/help_center_API.html?spm=a2g01.8078014.0.0.583c5ef1oaARRg
 
 // API ebay
-// https://developer.ebay.com/Devzone/finding/CallRef/index.html                    <td>{{ $detail->status }} </td>
+// https://developer.ebay.com/Devzone/finding/CallRef/index.html
+
+// categories
+// http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&siteid=3&CategoryID=-1&version=729&IncludeSelector=ChildCategories
