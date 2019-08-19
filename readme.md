@@ -15,3 +15,11 @@ admin/subscribes
     ->Admin\ClientController$subscribes
 
         -> view/admin/subscivers.blade
+
+
+rm -Rf .git
+
+
+
+
+boostrap collpse
