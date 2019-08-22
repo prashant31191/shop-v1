@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <style>
     body { 
         padding-top: 70px; 
@@ -20,6 +22,23 @@
         max-width: 2520px;
         margin: 20px;
     }
+
+    /********************* shopping Demo-1 **********************/
+    .product-grid{font-family:Raleway,sans-serif;text-align:center;padding:0 0 72px;border:1px solid rgba(0,0,0,.1);overflow:hidden;position:relative;z-index:1}
+    .product-grid .product-image{position:relative;transition:all .3s ease 0s}
+    .product-grid .product-image a{display:block}
+    .product-grid .product-image img{width:auto;height:200px}
+    .product-grid .pic-1{opacity:1;transition:all .3s ease-out 0s}
+    .product-grid:hover .pic-1{opacity:1}
+    .product-grid .product-content{background-color:#fff;text-align:center;padding:12px 0;margin:0 auto;position:absolute;left:0;right:0;bottom:-27px;z-index:1;transition:all .3s}
+    .product-grid:hover .product-content{bottom:0}
+    .product-grid .title{font-size:13px;font-weight:400;letter-spacing:.5px;text-transform:capitalize;margin:0 0 10px;transition:all .3s ease 0s}
+    .product-grid .title a{color:#828282}
+    .product-grid .title a:hover,.product-grid:hover .title a{color:#ef5777}
+    .product-grid .price{color:#333;font-size:17px;font-family:Montserrat,sans-serif;font-weight:700;letter-spacing:.6px;margin-bottom:8px;text-align:center;transition:all .3s}
+    .product-grid .price span{color:#999;font-size:13px;font-weight:400;text-decoration:line-through;margin-left:3px;display:inline-block}
+    .product-grid .add-to-cart{color:#000;font-size:13px;font-weight:600}
+
     
     </style>
 
@@ -49,14 +68,22 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Subscribe</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('subscribe') }}">Create New</a>
+                        <a class="dropdown-item" href="{{ route('subscribers.create') }}">create</a>
+                        <a class="dropdown-item" href="{{ route('subscribers.index') }}">index</a>
                     </div>
                 </li>       
         
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Products</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('products') }}">All Products</a>
+                        <a class="dropdown-item" href="{{ route('products.index') }}">index</a>
+                    </div>
+                </li>   
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Categories</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('categories.index') }}">index</a>
                     </div>
                 </li>     
             </ul>
@@ -81,13 +108,6 @@
         </div>
 
 
-{{--         
-
-
-        <!-- navigation bar ends here -->      
-        <div class="container">
-            @yield('content')       
-        </div> --}}
         <!-- Footer -->
         <footer class="page-footer bg-info mb-1 mt-3 p-1 fixed-bottom navbar navbar-expand-lg navbar-dark">
 

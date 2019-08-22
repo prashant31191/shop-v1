@@ -5,7 +5,7 @@
 
     <h2>Subscribe to Our Newsletter</h2>
         
-    <form method="POST" action="subscribe">
+    <form method="POST" action="{{ route('subscribers.store') }}">
         @csrf
 
         <div class="form-group">
