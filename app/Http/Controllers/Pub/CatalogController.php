@@ -15,7 +15,7 @@ class CatalogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {
         $items_per_page = $request->per_page ?? 12;
         $products = Product::orderByDesc('updated_at')->paginate($items_per_page);
         $categories = Category::where('category_id', NULL)->get();
@@ -23,29 +23,25 @@ class CatalogController extends Controller
     }
 
     public function indexPriceSort(Request $request, $sort)
-    {        
+    {
         $items_per_page = $request->per_page ?? 12;
 
         if ($sort == "cheap") {
-            $products = Product::with('cheapestPrice')->paginate($items_per_page);
+            $products = Product::join('prices', 'products.id', '=', 'prices.id')->orderBy('prices.value', 'asc')->select('products.*')->paginate($items_per_page);
 
         }elseif ($sort == "expensive") {
-            $products = Product::with('cheapestPrice')->get()->sortByDesc('cheapestPrice.value');
+            $products = Product::join('prices', 'products.id', '=', 'prices.id')->orderBy('prices.value', 'desc')->select('products.*')->paginate($items_per_page);
         }
-
-        dd($products);
-    
-        // $products = Product::with('cheapestPrice')->get()->sortByDesc('cheapestPrice.value');
 
         $categories = Category::where('category_id', NULL)->get();
         $all_categories = Category::pluck('id', 'name')->all();
 
         return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
-    } 
+    }
 
 
     public function indexDateSort(Request $request, $sort)
-    {        
+    {
         $items_per_page = $request->per_page ?? 12;
 
         if ($sort == "fresh") {
@@ -53,12 +49,12 @@ class CatalogController extends Controller
         }else {
             $products = Product::orderBy('updated_at')->paginate($items_per_page);
         }
-    
+
         $categories = Category::where('category_id', NULL)->get();
         $all_categories = Category::pluck('id', 'name')->all();
 
         return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
-    } 
+    }
 
     /**
      * Show the form for creating a new resource.
