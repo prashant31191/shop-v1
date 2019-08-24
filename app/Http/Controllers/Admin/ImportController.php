@@ -18,7 +18,7 @@ class ImportController extends Controller
 
         $content = file_get_contents("http://gw.api.alibaba.com/openapi/param2/2/portals.open/api.listPromotionProduct/92400?fields=productId,productTitle,productUrl,imageUrl,originalPrice,salePrice,discount,evaluateScore,commission,commissionRate,30daysCommission,volume,packageType,lotNum,validTime,storeName,storeUrl,allImageUrls&keywords=$keyword&localCurrency=USD&originalPriceTo=999&highQualityItems=true");
         $details = json_decode($content);
-        
+
         //dump($details->result->products);
 
         Currency::truncate();
@@ -50,12 +50,12 @@ class ImportController extends Controller
                 'image' => $image,
 
             ]);
-    
+
             $price = Price::create([
                 'value' => $original_price,
                 'discount' => $discount,
-            ]);   
-            
+            ]);
+
 
             $product->prices()->save($price);
             $currency->rates()->save($currency_rate);
@@ -66,8 +66,8 @@ class ImportController extends Controller
             // print "<br>discount: ".$discount;
             // print "<br><img style=\"height: 100px;\" src=\"$image\">";
 
-        }   
-        
+        }
+
         return redirect()->to('admin/products/list');
 
     }
@@ -133,7 +133,7 @@ class ImportController extends Controller
         // Build the indexed item filter URL snippet
         buildURLArray($filterarray);
 
-        // Construct the findItemsByKeywords HTTP GET call 
+        // Construct the findItemsByKeywords HTTP GET call
         $apicall = "$endpoint?";
         $apicall .= "OPERATION-NAME=findItemsByKeywords";
         $apicall .= "&SERVICE-VERSION=$version";
@@ -157,12 +157,12 @@ class ImportController extends Controller
                 'name' => 'US Dollar',
                 'code' => 'USD',
             ]);
-    
+
             $currency_rate = CurrencyRate::create([
                 'rate' => 17.447,
             ]);
 
-            // If the response was loaded, parse it and build links  
+            // If the response was loaded, parse it and build links
             foreach($resp->searchResult->item as $item) {
 
                 // dd($item->primaryCategory);
@@ -174,7 +174,7 @@ class ImportController extends Controller
                 $p_price = $item->sellingStatus->currentPrice;
                 $category_id = $item->primaryCategory->categoryId;
                 $category_name = $item->primaryCategory->categoryName;
-            
+
                 // For each SearchResultItem node, build a link and append it to $results
 
 
@@ -185,25 +185,25 @@ class ImportController extends Controller
                         // 'name' => 'Pop Corn Dulce',
                         'name' => $category_name,
                         'category_id' => $category_id,
-                    ]); 
-                }              
-              
+                    ]);
+                }
+
                 $product = Product::create([
                     'name' => $title,
                     'description' => $description,
                     'image' => $image,
-    
+
                 ]);
-        
+
                 $price = Price::create([
                     'value' => $p_price,
                     'discount' => 0,
-                ]);                    
-    
+                ]);
+
                 $product->prices()->save($price);
                 $currency->rates()->save($currency_rate);
                 $currency->prices()->save($price);
-    
+
                 // print "title: ".$title;
                 // print "<br>description: ".$description;
                 // print "<br>price: ".$p_price;
@@ -230,7 +230,7 @@ class ImportController extends Controller
 
         $country_content = file_get_contents("http://battuta.medunes.net/api/country/all/?key=$api_key");
         $country_details = json_decode($country_content);
-        
+
         $limit = 5;
         $i = 1;
 
@@ -245,7 +245,7 @@ class ImportController extends Controller
                     'name' => $country_detail->name,
                     'code' => $country_detail->code,
                 ]);
-            }  
+            }
 
 
             // $country = Country::create([
@@ -255,8 +255,8 @@ class ImportController extends Controller
             // $country->save();
 
             $region_content = file_get_contents("http://battuta.medunes.net/api/region/$country_detail->code/all/?key=$api_key");
-            $region_details = json_decode($region_content);       
-            
+            $region_details = json_decode($region_content);
+
             foreach ($region_details as $region_detail) {
 
                 $region = Region::create([
@@ -264,9 +264,9 @@ class ImportController extends Controller
                 ]);
 
                 $region->country()->associate($country);
-                $region->save();    
-   
-                // dd($region);                
+                $region->save();
+
+                // dd($region);
             }
 
             if ($i < $limit) {
@@ -277,53 +277,53 @@ class ImportController extends Controller
 
 
             $i++;
-        }           
+        }
 
     }
 
 
     public function emails(){
         $faker = Faker::create();
-        
 
-        for ($i=0; $i < 50; $i++) { 
+
+        for ($i=0; $i < 50; $i++) {
             $email = Email::create([
                 'email' => $faker->email,
                 'status' => rand(0,1)
             ]);
-        }          
+        }
         return redirect()->to('admin/subscribes/list');
     }
 
     public function ebayCategories(){
-       
+
         $limit = 5;
-           
+
 
         $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=-1&IncludeSelector=ChildCategories");
         $primary_categories = json_decode(json_encode($content));
 
         foreach ($primary_categories->CategoryArray as $primary_category) {
             // dd($primary_category);
-            
-            $i = 0;     
+
+            $i = 0;
             foreach ($primary_category as $category) {
 
                 if ($i>$limit) {
                     break;
                 }
-                
+
                 $category_exist = Category::where('name', $category->CategoryName)->first();
                 if ( ($category_exist === null) && ($category->CategoryID >= 0 ) ) {
-                    
+
                     $category = Category::create([
 
                         // 'name' => 'Pop Corn Dulce',
                         'name' => $category->CategoryName,
                         'category_id' => NULL,
                         'id' => $category->CategoryID,
-                    ]); 
-                }              
+                    ]);
+                }
 
                 $i++;
 
@@ -331,80 +331,80 @@ class ImportController extends Controller
         }
 
         return redirect()->to('admin/categories');
-        
+
     }
 
     public function ebaySubCategories(){
-       
+
         $limit = 3;
-       
+
         $categories = Category::get('id');
         // var_dump($categories);
-        
+
         foreach ($categories as $key) {
 
-        
+
         // dd($key->id);
-     
+
             $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
             $subcategories = json_decode(json_encode($content));
 
             // dd($subcategories);
 
-            foreach ($subcategories->CategoryArray as $subcategory) {            
+            foreach ($subcategories->CategoryArray as $subcategory) {
                 $i = 0;
                 foreach ($subcategory as $sub) {
 
                     if ($i>$limit) {
                         break;
                     }
-            
+
                     $subcategory_exist = Category::where('name', $sub->CategoryName)->first();
                     if ( ($subcategory_exist === null) && ($sub->CategoryID >= 0 ) ) {
-        
+
                         // dd($category_exist);
-                        $subcategory = Category::create([    
+                        $subcategory = Category::create([
                             // 'name' => 'Pop Corn Dulce',
                             'name' => $sub->CategoryName,
                             'category_id' => $key->id,
                             // 'id' => $category->CategoryID,
-                        ]); 
-    
-                    }     
+                        ]);
+
+                    }
                     // dd($category);
-                    $i++;   
+                    $i++;
                 }
-                 
+
             }
 
             // var_dump($sub);
-                 
-        }    
+
+        }
         return redirect()->to('admin/categories');
 
-        
+
     }
 
     public function ebaySubSubCategories(){
-       
+
         $limit = 2;
-        
+
         $categories = Category::where('category_id', '<>', 'NULL')->get('id');
-        
+
         // dd($categories);
-        
+
         $i = 0;
-        
+
         foreach ($categories as $key) {
-        
+
         // dd($key->id);
-     
+
             $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
             $subcategories = json_decode(json_encode($content));
 
 
-                foreach ($subcategories as $subcategory) {  
-            dd($subcategories);            
+                foreach ($subcategories as $subcategory) {
+            dd($subcategories);
 
                     if ($subcategory->contains('name', "CategoryArray")){
                         dd($subcategory->CategoryArray);
@@ -412,39 +412,39 @@ class ImportController extends Controller
 
                     $i = 0;
                     foreach ($subcategory as $sub) {
-    
+
                         if ($i>$limit) {
                             break;
                         }
-                
+
                         $subcategory_exist = Category::where('name', $sub->CategoryName)->first();
                         if ( ($subcategory_exist === null) && ($sub->CategoryID >= 0 ) ) {
-            
+
                             // dd($category_exist);
-                            $subcategory = Category::create([    
+                            $subcategory = Category::create([
                                 // 'name' => 'Pop Corn Dulce',
                                 'name' => $sub->CategoryName,
                                 'category_id' => $key->id,
                                 // 'id' => $category->CategoryID,
-                            ]); 
-        
-                        }     
-                        // dd($category);
-                        $i++;   
-                    }
-                     
-                }
-            
+                            ]);
 
-           
+                        }
+                        // dd($category);
+                        $i++;
+                    }
+
+                }
+
+
+
 
 
             // var_dump($sub);
-                 
-        }        
+
+        }
 
         return redirect()->to('admin/categories');
-        
+
     }
 
 }
@@ -454,7 +454,7 @@ class ImportController extends Controller
 // http://battuta.medunes.net/api/country/all/?key={YOUR_API_KEY}
 // http://battuta.medunes.net/api/region/{COUNTRY_CODE}/all/?key={YOUR_API_KEY}
 
-// API Apiexpress 
+// API Apiexpress
 // https://portals.aliexpress.com/help/help_center_API.html?spm=a2g01.8078014.0.0.583c5ef1oaARRg
 
 // API ebay
