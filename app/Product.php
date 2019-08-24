@@ -16,4 +16,10 @@ class Product extends Model
         return $this->hasMany(\App\Image::class);
     }
     
+    
+    public function cheapestPrice(){
+        return $this->hasOne(\App\Price::class)->orderBy('value', 'desc');
+        // return $this->hasMany(\App\Price::class)->orderBy('value', 'desc')->latest();
+    }
+
 }

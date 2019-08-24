@@ -15,9 +15,6 @@
                 </div>
                                             
                 <p><a href="#">{{ $detail['name'] }}</a></p>
-
-                {{-- {{ dd($detail->prices[0]->value) }} --}}
-
                 <div class="price">${{ $detail->prices[0]->value }}</div>
                         
             </div>
@@ -27,14 +24,18 @@
     </div>
 
     <hr>
+    {{-- {{ dd($products) }}} --}}
 
-    {{-- <div class="d-flex justify-content-center">
-        {{ $products->concat(
+    <div class="d-flex justify-content-center">
+        {{-- {{ $products->concat(
             [
                 'per_page' => $items_per_page,               
             ]
-        )->links() }}
-    </div> --}}
+        )->links() }} --}}
+
+        {{-- {{ $products->links() }} --}}
+
+    </div>
 
 @endsection
 

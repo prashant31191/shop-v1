@@ -17,36 +17,25 @@ class CatalogController extends Controller
     public function index(Request $request)
     {        
         $items_per_page = $request->per_page ?? 12;
-
         $products = Product::orderByDesc('updated_at')->paginate($items_per_page);
-
         $categories = Category::where('category_id', NULL)->get();
-
         return view("public.catalog", compact('products', 'items_per_page', 'categories'));
     }
 
     public function indexPriceSort(Request $request, $sort)
     {        
-
         $items_per_page = $request->per_page ?? 12;
 
         if ($sort == "cheap") {
-            $prices = Price::orderBy('value')->paginate($items_per_page);
+            $products = Product::with('cheapestPrice')->paginate($items_per_page);
+
         }elseif ($sort == "expensive") {
-            $prices = Price::orderByDesc('value')->paginate($items_per_page);
+            $products = Product::with('cheapestPrice')->get()->sortByDesc('cheapestPrice.value');
         }
 
-        // $products = Product::paginate($items_per_page);
-
-        $products = collect([]);
-
-        foreach ($prices as $key => $value) {
-
-            $products->push($value->product);
-            // dd($value->id);
-            //dd($value->product);
-        }
-
+        dd($products);
+    
+        // $products = Product::with('cheapestPrice')->get()->sortByDesc('cheapestPrice.value');
 
         $categories = Category::where('category_id', NULL)->get();
         $all_categories = Category::pluck('id', 'name')->all();
