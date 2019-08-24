@@ -20,6 +20,4 @@ admin/subscribes
 rm -Rf .git
 
 
-
-
-boostrap collpse
+test
