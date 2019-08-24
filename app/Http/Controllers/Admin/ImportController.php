@@ -104,6 +104,19 @@ class ImportController extends Controller
             'value' => array('AuctionWithBIN','FixedPrice','StoreInventory'),
             'paramName' => '',
             'paramValue' => ''),
+
+            array(
+                'name' => 'HideDuplicateItems',
+                'value' => 'true',
+                'paramName' => '',
+                'paramValue' => ''
+            ),
+            array(
+                'name' => 'Condition',
+                'value' => 'new',
+                'paramName' => '',
+                'paramValue' => ''
+            ),
         );
 
         // Generates an indexed URL snippet from the array of item filters
@@ -177,12 +190,12 @@ class ImportController extends Controller
 
                 // For each SearchResultItem node, build a link and append it to $results
 
+                dd($item);
 
                 $category_exist = Category::where('name', $category_name)->get();
 
                 if ($category_exist->count() == 0) {
                     $category = Category::create([
-                        // 'name' => 'Pop Corn Dulce',
                         'name' => $category_name,
                         'category_id' => $category_id,
                     ]);
@@ -297,7 +310,7 @@ class ImportController extends Controller
 
     public function ebayCategories(){
 
-        $limit = 5;
+        $limit = 6;
 
 
         $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=-1&IncludeSelector=ChildCategories");
@@ -349,33 +362,44 @@ class ImportController extends Controller
             $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
             $subcategories = json_decode(json_encode($content));
 
-            // dd($subcategories);
+            // dd( $subcategories );
 
-            foreach ($subcategories->CategoryArray as $subcategory) {
-                $i = 0;
-                foreach ($subcategory as $sub) {
+            if (array_key_exists('CategoryArray', $subcategories)) {
+                foreach ($subcategories->CategoryArray as $subcategory) {
+                    $i = 0;
+                    foreach ($subcategory as $sub) {
 
-                    if ($i>$limit) {
-                        break;
+                        if ($i>$limit) {
+                            break;
+                        }
+
+                        // dd( $sub );
+
+                        if ($sub->CategoryName) {
+
+                        }else {
+                            break;
+                        }
+
+                        $subcategory_exist = Category::where('name', $sub->CategoryName)->first();
+                        if ( ($subcategory_exist === null) && ($sub->CategoryID >= 0 ) ) {
+
+                            $subcategory = Category::create([
+                                'id' => $sub->CategoryID,
+                                'name' => $sub->CategoryName,
+                                'category_id' => $key->id,
+                            ]);
+
+                        }
+                        // dd($category);
+                        $i++;
                     }
 
-                    $subcategory_exist = Category::where('name', $sub->CategoryName)->first();
-                    if ( ($subcategory_exist === null) && ($sub->CategoryID >= 0 ) ) {
-
-                        // dd($category_exist);
-                        $subcategory = Category::create([
-                            // 'name' => 'Pop Corn Dulce',
-                            'name' => $sub->CategoryName,
-                            'category_id' => $key->id,
-                            // 'id' => $category->CategoryID,
-                        ]);
-
-                    }
-                    // dd($category);
-                    $i++;
                 }
-
             }
+
+
+
 
             // var_dump($sub);
 
@@ -387,62 +411,112 @@ class ImportController extends Controller
 
     public function ebaySubSubCategories(){
 
-        $limit = 2;
-
         $categories = Category::where('category_id', '<>', 'NULL')->get('id');
 
         // dd($categories);
+        foreach ($categories as $category) {
 
-        $i = 0;
+            $test_id = $category->id;
 
-        foreach ($categories as $key) {
-
-        // dd($key->id);
-
-            $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$key->id&IncludeSelector=ChildCategories");
+            $content = simplexml_load_file("http://open.api.ebay.com/Shopping?callname=GetCategoryInfo&appid=SergheiP-ShopLara-PRD-f44838eb2-53c2fd8f&version=967&siteid=0&CategoryID=$test_id&IncludeSelector=ChildCategories");
             $subcategories = json_decode(json_encode($content));
 
+            //dd($subcategories);
 
-                foreach ($subcategories as $subcategory) {
-            dd($subcategories);
+            if (is_array($subcategories->CategoryArray->Category)) {
+                foreach ($subcategories->CategoryArray->Category as $subcategory) {
 
-                    if ($subcategory->contains('name', "CategoryArray")){
-                        dd($subcategory->CategoryArray);
-                    }
+                    $exist = Category::where('id', $subcategory->CategoryID)->first();
+                    if ( ($exist === null) ) {
 
-                    $i = 0;
-                    foreach ($subcategory as $sub) {
-
-                        if ($i>$limit) {
-                            break;
-                        }
-
-                        $subcategory_exist = Category::where('name', $sub->CategoryName)->first();
-                        if ( ($subcategory_exist === null) && ($sub->CategoryID >= 0 ) ) {
-
-                            // dd($category_exist);
+                        if ( $subcategory->CategoryLevel == "1") { // Level 1 NULL
                             $subcategory = Category::create([
-                                // 'name' => 'Pop Corn Dulce',
-                                'name' => $sub->CategoryName,
-                                'category_id' => $key->id,
-                                // 'id' => $category->CategoryID,
+                                'id' => $subcategory->CategoryID,
+                                'name' => $subcategory->CategoryName,
+                                'category_id' => NULL,
                             ]);
 
+                        }else if ( $subcategory->CategoryLevel == "2") { // Level 2
+
+                            // $exist = Category::where('id', $subcategory->CategoryID)->first();
+
+                            if ( Category::where('name', $subcategory->CategoryName)->first() === null ) {
+                                $subcategory = Category::create([
+                                    'id' => $subcategory->CategoryID,
+                                    'name' => $subcategory->CategoryName,
+                                    'category_id' => $subcategory->CategoryParentID,
+                                ]);
+                            }
+
                         }
-                        // dd($category);
-                        $i++;
+
+                        else if ( $subcategory->CategoryLevel == "3") { // Level 3
+
+                            // $exist = Category::where('id', $subcategory->CategoryID)->first();
+                            if ( (Category::where('name', $subcategory->CategoryName)->first() === null) ) {
+                                $subcategory = Category::create([
+                                    'id' => $subcategory->CategoryID,
+                                    'name' => $subcategory->CategoryName,
+                                    'category_id' => $subcategory->CategoryParentID,
+                                ]);
+                            }
+
+
+                        }
+
+
+                    }
+
+                    // var_dump($sub);
+
+                }
+            }else{
+
+                $subcategory = $subcategories->CategoryArray->Category;
+
+                $exist = Category::where('id', $subcategory->CategoryID)->first();
+                if ( ($exist === null) ) {
+
+                    if ( $subcategory->CategoryLevel == "1") { // Level 1 NULL
+                        $subcategory = Category::create([
+                            'id' => $subcategory->CategoryID,
+                            'name' => $subcategory->CategoryName,
+                            'category_id' => NULL,
+                        ]);
+
+                    }else if ( $subcategory->CategoryLevel == "2") { // Level 2
+
+                        // $exist = Category::where('id', $subcategory->CategoryID)->first();
+
+                        if ( Category::where('name', $subcategory->CategoryName)->first() === null ) {
+                            $subcategory = Category::create([
+                                'id' => $subcategory->CategoryID,
+                                'name' => $subcategory->CategoryName,
+                                'category_id' => $subcategory->CategoryParentID,
+                            ]);
+                        }
+
+                    }
+
+                    else if ( $subcategory->CategoryLevel == "3") { // Level 3
+
+                        // $exist = Category::where('id', $subcategory->CategoryID)->first();
+                        if ( (Category::where('name', $subcategory->CategoryName)->first() === null) ) {
+                            $subcategory = Category::create([
+                                'id' => $subcategory->CategoryID,
+                                'name' => $subcategory->CategoryName,
+                                'category_id' => $subcategory->CategoryParentID,
+                            ]);
+                        }
+
+
                     }
 
                 }
+                // dd(count($subcategories->CategoryArray->Category));
 
-
-
-
-
-            // var_dump($sub);
-
+            }
         }
-
         return redirect()->to('admin/categories');
 
     }
