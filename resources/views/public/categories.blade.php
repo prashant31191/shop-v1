@@ -10,7 +10,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="collapsed card-link" data-toggle="collapse" href="#category{{ $category->id }}">{{ $category->name }} ({{ count($all_categories) }})</a>
+                    <a class="collapsed card-link" data-toggle="collapse" href="#category{{ $category->id }}">{{ $category->name }}</a>
                 </div>
                 <div id="category{{ $category->id }}" class="collapse" data-parent="#accordion">
                     <div class="card-body">

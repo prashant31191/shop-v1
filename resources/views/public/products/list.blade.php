@@ -35,7 +35,7 @@
 
 @section('sidebar')
 
-    <div class="m-1 p-3 text-center mb-5 border border-danger rounded bg-secondary">
+    <div class="m-3 p-3 text-center mb-5 border border-danger rounded bg-secondary">
         <h2>Newsletter Subscribe</h2>
         
         <form method="POST" action="{{ route('subscribers.store') }}">

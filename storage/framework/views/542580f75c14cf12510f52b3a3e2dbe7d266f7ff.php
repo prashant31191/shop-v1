@@ -103,6 +103,13 @@
                 </a>
             </li>  
 
+            <li>
+              <a href="<?php echo e(route('admin.categories')); ?>">
+              <i class="fas fa-th-list"></i>
+              <p>Categories</p>
+              </a>
+          </li>  
+
         </ul>
 
         <hr>

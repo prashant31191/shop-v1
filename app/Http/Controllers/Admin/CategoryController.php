@@ -16,16 +16,11 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
 
-        $items_per_page = $request->per_page ?? 10;
-        $sortby = $request->sortby ?? 'id';
-        $order = $request->order ?? 'ASC';
+        $categories = Category::get();
 
-        $categories = Category::orderBy($sortby, $order)->paginate($items_per_page);
-
-        $total_items = $categories->total();
 
         // dd($total_items);
-        return view("admin.categories", compact('categories', 'items_per_page', 'total_items', 'sortby', 'order'));
+        return view("admin.categories", compact('categories'));
     }
 
     /**

@@ -39,3 +39,12 @@ Route::resource('/subscribers', 'ClientController', ['names' => [
     'update' => 'subscribers.update',
     'destroy' => 'subscribers.destroy',
 ]]);
+
+// PRODUCTS
+Route::get('/catalog', 'CatalogController@index')->name('public.catalog');
+// Route::resource('/catalog/price/{sort}', 'CatalogController@indexPriceSort');
+// Route::get('/catalog/date/{sort}', 'CatalogController@indexDateSort')->name('public.catalog.date');
+
+
+Route::get('catalog/date/{sort}', 'CatalogController@indexDateSort');
+Route::get('catalog/price/{sort}', 'CatalogController@indexPriceSort');

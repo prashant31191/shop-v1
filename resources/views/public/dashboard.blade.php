@@ -15,43 +15,36 @@
 
     <style>
     body { 
-        padding-top: 70px; 
-        padding-bottom: 70px;
+        background-color: #f4f4f4;
     }
     .container {
-        max-width: 2520px;
-        margin: 20px;
+        max-width: 1400px;
+        margin: auto;
     }
 
-    /********************* shopping Demo-1 **********************/
-    .product-grid{font-family:Raleway,sans-serif;text-align:center;padding:0 0 72px;border:1px solid rgba(0,0,0,.1);overflow:hidden;position:relative;z-index:1}
-    .product-grid .product-image{position:relative;transition:all .3s ease 0s}
-    .product-grid .product-image a{display:block}
-    .product-grid .product-image img{width:auto;height:200px}
-    .product-grid .pic-1{opacity:1;transition:all .3s ease-out 0s}
-    .product-grid:hover .pic-1{opacity:1}
-    .product-grid .product-content{background-color:#fff;text-align:center;padding:12px 0;margin:0 auto;position:absolute;left:0;right:0;bottom:-27px;z-index:1;transition:all .3s}
-    .product-grid:hover .product-content{bottom:0}
-    .product-grid .title{font-size:13px;font-weight:400;letter-spacing:.5px;text-transform:capitalize;margin:0 0 10px;transition:all .3s ease 0s}
-    .product-grid .title a{color:#828282}
-    .product-grid .title a:hover,.product-grid:hover .title a{color:#ef5777}
-    .product-grid .price{color:#333;font-size:17px;font-family:Montserrat,sans-serif;font-weight:700;letter-spacing:.6px;margin-bottom:8px;text-align:center;transition:all .3s}
-    .product-grid .price span{color:#999;font-size:13px;font-weight:400;text-decoration:line-through;margin-left:3px;display:inline-block}
-    .product-grid .add-to-cart{color:#000;font-size:13px;font-weight:600}
-
-    
+    .price {
+        text-align: center;
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        color: red;
+        width: 60px;
+        height: 23px;
+        font-size: 14px;
+        line-height: 14x;
+        background-color: #dddddd;
+        border: 1px solid #000;
+        border-radius: 10px;
+    }
     </style>
 
     <title>@yield('title')</title>
 
 </head>
 
-  <body>
+    <body>
 
-
-
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-info mb-5 mt-1 fixed-top">
+        <nav class="container navbar navbar-expand-lg navbar-dark bg-primary mb-3 mt-2">
 
             <!-- Brand -->
             <a class="navbar-brand" href="/shop-v1/public/admin">
@@ -79,24 +72,28 @@
                         <a class="dropdown-item" href="{{ route('products.index') }}">index</a>
                     </div>
                 </li>   
-                
+
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Catalog</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('public.catalog') }}">index</a>
+                        </div>
+                    </li>   
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Categories</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('categories.index') }}">index</a>
                     </div>
                 </li>     
-            </ul>
+            </ul>       
         
-
-        
-        </nav>        
-        
+        </nav>     
 
         <div class="container">
             <div class="row">
 
-                <div class= "col-8">
+                <div class= "col-9">
                     @yield('content')   
                 </div> 
 
@@ -109,7 +106,7 @@
 
 
         <!-- Footer -->
-        <footer class="page-footer bg-info mb-1 mt-3 p-1 fixed-bottom navbar navbar-expand-lg navbar-dark">
+        <footer class="container page-footer bg-primary mb-1 mt-3 p-1 navbar navbar-expand-lg navbar-dark">
 
             <ul class="navbar-nav pl-5">
         

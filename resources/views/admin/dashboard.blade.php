@@ -103,6 +103,13 @@
                 </a>
             </li>  
 
+            <li>
+              <a href="{{ route('admin.categories') }}">
+              <i class="fas fa-th-list"></i>
+              <p>Categories</p>
+              </a>
+          </li>  
+
         </ul>
 
         <hr>
