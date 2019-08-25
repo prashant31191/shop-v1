@@ -54,3 +54,8 @@ Route::get('/subscribes/list', 'ClientController@subscribes')->name('admin.subsc
 Route::get('/subscribes/delete/{id}', 'ClientController@deleteSubscriber');
 
 
+
+// BACKUP
+Route::get('/backup', 'BackupController@backUpAll')->name('backup');
+Route::get('/backup_db', 'BackupController@backUpDb')->name('backup_db');
+Route::get('/backup_files', 'BackupController@backUpFiles')->name('backup_files');
