@@ -12,8 +12,9 @@ class Price extends Model
         return $this->hasMany(\App\Currency::class);
     }
 
-    public function product(){
-        return $this->belongsTo(\App\Product::class);        
+    public function priceable(){
+        // return $this->belongsTo(\App\Product::class); 
+        return $this->morthTo();       
     }
 
     public function currency(){

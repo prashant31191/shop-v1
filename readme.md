@@ -7,18 +7,26 @@ INSTALLATION:
 
 https://www.techempower.com/benchmarks/#section=data-r18&hw=ph&test=json
 
-
-homework
-
-admin/subscribes
-
-    ->Admin\ClientController$subscribes
-
-        -> view/admin/subscivers.blade
+rm -Rf .git
 
 
-git rm -Rf .git
+seminar 25 August 2019
+
+    Cart Logic
+        * ServiceProvider
+        * Session
+        * Model "Cart" + relations
 
 
+    Cart STATUS
 
-last updated
+    DATA -> many/multiple routes
+
+        middleware
+        ServiceProvider
+
+    // Price -> product_id -> Product
+    // Price -> xxxxx -> Cart
+
+AppServiceProvider in boot -> 
+
