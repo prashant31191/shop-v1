@@ -190,7 +190,7 @@ class ImportController extends Controller
 
                 // For each SearchResultItem node, build a link and append it to $results
 
-                dd($item);
+                // dd($item);
 
                 $category_exist = Category::where('name', $category_name)->get();
 
