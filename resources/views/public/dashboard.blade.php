@@ -88,6 +88,11 @@
                 </li>     
             </ul>       
         
+            <ul class="m-auto mb-1">                
+                <span> {{ $cart->totalPrice()->first()->value }}</span>
+                <span> {{ $cart->totalPrice()->first()->code }}</span>
+            </ul>
+
         </nav>     
 
         <div class="container">
@@ -125,7 +130,7 @@
             </ul>
         
             <ul class="m-auto mb-1">                
-                <span>Public Dashboard</span>
+                <span>Public Dashboard </span>
             </ul>
                 
             <div class="text-center text-warning pr-5">
