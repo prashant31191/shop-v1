@@ -40,6 +40,7 @@ Route::resource('/subscribers', 'ClientController', ['names' => [
     'destroy' => 'subscribers.destroy',
 ]]);
 
+
 // PRODUCTS
 Route::get('/catalog', 'CatalogController@index')->name('public.catalog');
 // Route::resource('/catalog/price/{sort}', 'CatalogController@indexPriceSort');
