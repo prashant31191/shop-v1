@@ -1,6 +1,7 @@
 <?php
 
     return [
+        
         'password' => env('ZIP_PASS'),
         'encryption' => \Olssonm\BackupShield\Encryption::ENCRYPTION_DEFAULT
 

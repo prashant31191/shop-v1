@@ -30,3 +30,12 @@ seminar 25 August 2019
 
 AppServiceProvider in boot -> 
 
+
+
+
+Zip Password:
+https://github.com/olssonm/laravel-backup-shield
+
+
+Backup:
+https://github.com/spatie/laravel-backup
