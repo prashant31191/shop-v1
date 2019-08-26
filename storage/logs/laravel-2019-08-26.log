@@ -2117,3 +2117,18 @@
 #11 D:\\SERVER\\shop-v1\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #12 {main}
 "} 
+[2019-08-26 17:05:32] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) at D:\\SERVER\\shop-v1\\vendor\
+elexa\\zip\\src\\PhpZip\\Crypto\\TraditionalPkwareEncryptionEngine.php:213)
+[stacktrace]
+#0 {main}
+"} 
+[2019-08-26 17:06:03] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) at D:\\SERVER\\shop-v1\\vendor\
+elexa\\zip\\src\\PhpZip\\Crypto\\TraditionalPkwareEncryptionEngine.php:213)
+[stacktrace]
+#0 {main}
+"} 
+[2019-08-26 17:06:46] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 134217736 bytes) at D:\\SERVER\\shop-v1\\vendor\
+elexa\\zip\\src\\PhpZip\\Crypto\\TraditionalPkwareEncryptionEngine.php:213)
+[stacktrace]
+#0 {main}
+"} 

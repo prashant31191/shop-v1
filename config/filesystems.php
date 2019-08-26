@@ -46,29 +46,30 @@ return [
         'local' => [
             'driver' => 'local',
             // 'root' => storage_path('app'),
-            'root'   => '../BACK UP',
+            'root'   => '../../../BACK UP/LARAVEL', // that's where your backups are stored by default: storage/backups
+
 
         ],
 
-        'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            // 'root'   => 'shop-v1/BACK UP',
-            // 'root'   => '../BACK UP',
+        // 'public' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public'),
+        //     // 'root'   => 'shop-v1/BACK UP',
+        //     // 'root'   => '../BACK UP',
 
 
-            // 'url' => env('APP_URL').'/storage',
-            // 'visibility' => 'public',
-        ],
+        //     // 'url' => env('APP_URL').'/storage',
+        //     // 'visibility' => 'public',
+        // ],
 
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-        ],
+        // 's3' => [
+        //     'driver' => 's3',
+        //     'key' => env('AWS_ACCESS_KEY_ID'),
+        //     'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        //     'region' => env('AWS_DEFAULT_REGION'),
+        //     'bucket' => env('AWS_BUCKET'),
+        //     'url' => env('AWS_URL'),
+        // ],
 
     ],
 

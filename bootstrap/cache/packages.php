@@ -34,6 +34,13 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'olssonm/laravel-backup-shield' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Olssonm\\BackupShield\\BackupShieldServiceProvider',
+    ),
+  ),
   'spatie/laravel-backup' => 
   array (
     'providers' => 
