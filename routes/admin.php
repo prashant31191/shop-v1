@@ -4,9 +4,12 @@ Route::get('/', function(){
     return view('admin.dashboard');
 });
 
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
 Route::get('/test', 'TestController@test');
-
-
 
 // CATEGORIES
 Route::resource('/categories', 'CategoryController');
