@@ -123,24 +123,44 @@
         <hr>
 
         <ul class="nav">
-    
-            <li>
-                <a href="/shop-v1/public/admin">
-                <i class="far fa-user-circle"></i>
-                <p>Admin</p>
-                </a>
-            </li>
-
-            <li class="mb-5">
-                <a href="/shop-v1/public">
-                <i class="fas fa-user-circle"></i>
-                <p>Public</p>
-                </a>
-            </li>    
+  
+          <li class="mb-5">
+              <a href="/shop-v1/public">
+              <i class="fas fa-user-circle"></i>
+              <p>Public</p>
+              </a>
+          </li>    
 
         </ul>
 
         <hr>
+        <ul class="nav">
+    
+          <li>
+              <a href="{{ route('backup_all') }}">
+              <i class="fas fa-file-download"></i>
+              <p>BackUp ALL</p>
+              </a>
+          </li>
+
+          <li>
+            <a href="{{ route('backup_db') }}">
+            <i class="fas fa-cloud-download-alt"></i>
+            <p>BackUp DB</p>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('backup_files') }}">
+            <i class="fas fa-download"></i>
+            <p>BackUp Files</p>
+            </a>
+          </li>
+
+      </ul>
+        <hr>
+
+       
         <ul class="mt-5 mb-4">                
             <div class="text-center text-warning pr-5">
                 {{ (microtime(true) - LARAVEL_START) }} sec

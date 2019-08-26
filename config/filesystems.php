@@ -46,7 +46,7 @@ return [
         'local' => [
             'driver' => 'local',
             // 'root' => storage_path('app'),
-            'root'   => '../BACK UP/LARAVEL/Shop-v1',
+            'root'   => 'BACK UP/LARAVEL/Shop-v1',
 
         ],
 
