@@ -12,7 +12,7 @@ class Product extends Model
 
 
     public function prices(){
-        return $this->morthMany(\App\Price::class, 'priceable');
+        return $this->morphMany(\App\Price::class, 'priceable');
     }
 
 

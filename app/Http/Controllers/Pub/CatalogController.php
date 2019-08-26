@@ -33,10 +33,11 @@ class CatalogController extends Controller
             $products = Product::join('prices', 'products.id', '=', 'prices.id')->orderBy('prices.value', 'desc')->select('products.*')->paginate($items_per_page);
         }
 
-        $categories = Category::where('category_id', NULL)->get();
-        $all_categories = Category::pluck('id', 'name')->all();
+        return view("public.catalog", compact('products', 'items_per_page'));
 
-        return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
+        // $categories = Category::where('category_id', NULL)->get();
+        // $all_categories = Category::pluck('id', 'name')->all();
+        // return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
     }
 
 

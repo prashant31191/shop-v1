@@ -44,6 +44,8 @@
 
     <body>
 
+        {{-- {{ dd($categories) }} --}}
+
         <nav class="container navbar navbar-expand-lg navbar-dark bg-primary mb-3 mt-2">
 
             <!-- Brand -->
@@ -74,24 +76,22 @@
                 </li>   
 
                 <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Catalog</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('public.catalog') }}">index</a>
-                        </div>
-                    </li>   
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Categories</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Catalog</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('categories.index') }}">index</a>
+                        <a class="dropdown-item" href="{{ route('public.catalog') }}">index</a>
                     </div>
                 </li>     
-            </ul>       
-        
+            </ul>      
+            
             <ul class="m-auto mb-1">                
-                <span> {{ $cart->totalPrice()->first()->value }}</span>
-                <span> {{ $cart->totalPrice()->first()->code }}</span>
+                {{-- <span>Public Dashboard </span> --}}
             </ul>
+
+            <div class="text-center text-warning pr-5">
+                              
+                <span> {{ $cart->total_price->first()->value }}</span>
+                <span> {{ $cart->total_price->first()->currency->name }}</span>
+            </div>
 
         </nav>     
 
@@ -119,18 +119,10 @@
                     <a class="nav-link" href="/shop-v1/public/admin">Admin</a>
                 </li>        
         
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop-v1/public">Public</a>
-                </li>    
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/shop-v1/public/profile">Profile</a>
-                </li> 
-        
             </ul>
         
             <ul class="m-auto mb-1">                
-                <span>Public Dashboard </span>
+                <span>@2019 Copyright </span>
             </ul>
                 
             <div class="text-center text-warning pr-5">

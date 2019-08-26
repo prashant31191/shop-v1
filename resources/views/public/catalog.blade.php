@@ -5,9 +5,12 @@
 
     <div class="row">
 
-                {{-- {{ dd($products) }} --}}
+        {{-- {{ dd($products) }} --}}
 
         @foreach ($products as $detail)
+
+        {{-- {{ dd($detail) }} --}}
+
             <div class="col-md-3 col-sm-6 border p-2 bg-muted">
 
                 <div style="height:150px;" class="text-center position-relative">
@@ -15,7 +18,10 @@
                 </div>
 
                 <p><a href="#">{{ $detail['name'] }}</a></p>
-                <div class="price">${{ $detail->prices[0]->value }}</div>
+                <div class="price">$ {{ $detail->prices }}</div>
+                {{-- <div class="price">$ {{ dd($detail->prices) }}</div> --}}
+
+                {{-- <div class="price">${{ $detail->prices['value']->value }}</div> --}}
 
             </div>
 
