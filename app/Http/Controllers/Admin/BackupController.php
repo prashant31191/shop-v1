@@ -9,6 +9,7 @@ use Artisan;
 
 class BackupController extends Controller
 {
+    
     public function backUpAll(Request $request){
         Artisan::call('backup:run'); 
         return "BuckUp All Succesfull";

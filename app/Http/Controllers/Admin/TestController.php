@@ -44,9 +44,9 @@ class TestController extends Controller
 
         $product->prices()->save($price);
        
-        $cart = Cart::create()->total_price()->save($price);
-        $cart2 = Cart::create()->total_price()->save($price2);
-        $cart3 = Cart::create()->total_price()->save($price3);
+        Cart::create()->total_price()->save($price);
+        Cart::create()->total_price()->save($price2);
+        Cart::create()->total_price()->save($price3);
 
         
         // $cart2->delete();
