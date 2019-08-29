@@ -18,26 +18,24 @@ class CatalogController extends Controller
     {
         $items_per_page = $request->per_page ?? 12;
         $products = Product::orderByDesc('updated_at')->paginate($items_per_page);
-        $categories = Category::where('category_id', NULL)->get();
-        return view("public.catalog", compact('products', 'items_per_page', 'categories'));
+        
+        // $categories = Category::where('category_id', NULL)->get();
+
+        return view("public.catalog", compact('products', 'items_per_page'));
     }
 
     public function indexPriceSort(Request $request, $sort)
     {
         $items_per_page = $request->per_page ?? 12;
 
-        if ($sort == "cheap") {
-            $products = Product::join('prices', 'products.id', '=', 'prices.id')->orderBy('prices.value', 'asc')->select('products.*')->paginate($items_per_page);
-
-        }elseif ($sort == "expensive") {
-            $products = Product::join('prices', 'products.id', '=', 'prices.id')->orderBy('prices.value', 'desc')->select('products.*')->paginate($items_per_page);
+        if ($sort == "expensive") {            
+            $products = Product::join('prices', 'products.id', '=', 'prices.priceable_id')->orderBy('prices.value', 'desc')->select('products.*')->paginate($items_per_page);
+        }else{
+            $products = Product::join('prices', 'products.id', '=', 'prices.priceable_id')->orderBy('prices.value', 'asc')->select('products.*')->paginate($items_per_page);
         }
 
+        // dd($products);
         return view("public.catalog", compact('products', 'items_per_page'));
-
-        // $categories = Category::where('category_id', NULL)->get();
-        // $all_categories = Category::pluck('id', 'name')->all();
-        // return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
     }
 
 
@@ -51,10 +49,7 @@ class CatalogController extends Controller
             $products = Product::orderBy('updated_at')->paginate($items_per_page);
         }
 
-        $categories = Category::where('category_id', NULL)->get();
-        $all_categories = Category::pluck('id', 'name')->all();
-
-        return view("public.catalog", compact('products', 'items_per_page', 'categories', 'all_categories'));
+        return view("public.catalog", compact('products', 'items_per_page'));
     }
 
     /**

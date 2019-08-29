@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <style>
     body { 
@@ -26,7 +28,7 @@
         text-align: center;
         position: absolute;
         left: 5px;
-        top: 5px;
+        top: 15px;
         color: red;
         width: 60px;
         height: 23px;
@@ -36,6 +38,11 @@
         border: 1px solid #000;
         border-radius: 10px;
     }
+    .cart{
+        font-size: 18px;
+    }
+
+
     </style>
 
     <title>@yield('title')</title>
@@ -87,11 +94,17 @@
                 {{-- <span>Public Dashboard </span> --}}
             </ul>
 
-            <div class="text-center text-warning pr-5">
-                              
-                <span> {{ $cart->total_price->first()->value }}</span>
-                <span> {{ $cart->total_price->first()->currency->name }}</span>
+            <div class="cart text-center text-dark pr-5">
+
+                <i class="fas fa-shopping-cart pr-2"></i>
+                {{-- <span> {{ $cart_item->count() }}</span>           --}}
+                <span> {{ $cart_item }}</span> 
+
+                {{-- <span> {{ $cart_item }}</span>           --}}
+
             </div>
+        
+            
 
         </nav>     
 

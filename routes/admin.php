@@ -9,7 +9,11 @@ Route::get('/clear', function() {
     return "Cache is cleared";
 });
 
+
+
 Route::get('/test', 'TestController@test');
+
+
 
 // CATEGORIES
 Route::resource('/categories', 'CategoryController');

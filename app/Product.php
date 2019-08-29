@@ -15,6 +15,11 @@ class Product extends Model
         return $this->morphMany(\App\Price::class, 'priceable');
     }
 
+    public function cartItems(){
+        return $this->hasMany(\App\CartItem::class);
+    }
+
+
 
     // public function images(){
     //     return $this->hasMany(\App\Image::class);

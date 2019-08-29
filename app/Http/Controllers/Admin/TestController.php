@@ -21,7 +21,7 @@ class TestController extends Controller
             'name' => 'Euro'
         ]);
 
-        $price = Price::create([
+        $price1 = Price::create([
             'value' => 120,
             'disount' => 120,
         ]);
@@ -29,31 +29,29 @@ class TestController extends Controller
         $price2 = Price::create([
             'value' => 185
         ]);
-    
+
         $price3 = Price::create([
             'value' => 225
         ]);
 
-        $price->currency()->associate($currency)->save();
+        $price1->currency()->associate($currency)->save();
         $price2->currency()->associate($currency)->save();
         $price3->currency()->associate($currency)->save();
         
-        $product= Product::create([
+        $product1= Product::create([
             'name' => 'iPhone 9'
         ]);
 
-        $product->prices()->save($price);
-       
-        Cart::create()->total_price()->save($price);
-        Cart::create()->total_price()->save($price2);
-        Cart::create()->total_price()->save($price3);
-
-        
-        // $cart2->delete();
 
 
+        // dd($product);
 
+        $product1->prices()->save($price2);
 
+        // dd($product1);
+
+        Cart::create()->totalPrice()->save($price1);
+        Cart::create()->totalPrice()->save($price3);
 
     }
 
