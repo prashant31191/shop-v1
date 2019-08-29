@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Pub;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\{CartItem,Currency,Price,Product};
+use App\{Cart,CartItem,City,Client,ContactData,Country,Currency,CurrencyRate,Phone,Price,Product,Email, Category};
+use Artisan;
+
 
 class CartController extends Controller
 {
-
     public function add($id){
 
         // Artisan::call('migrate:refresh');
+
 
         $currency = Currency::where('id', 1)->first();
         $price = Price::where('priceable_id', $id)->first();
@@ -20,7 +22,12 @@ class CartController extends Controller
         // $exist = Category::where('id', 1)->first();
         // if ( ($exist === null) ) {
         //     Cart::create()->totalPrice()->save($price);
-        // }      
+        // }
+        
+        // $product->prices()->save($price);
+
+        // $product->prices()->save($price);        
+
 
         // check if product exist in cartItem       
         $exist = CartItem::where('product_id', $id)->first();
@@ -34,30 +41,10 @@ class CartController extends Controller
             $total = CartItem::where('product_id', $id)->first();
  
             CartItem::where('product_id', $id)->update(['amount' => $total->amount+1]);
-        }        
+        }
+        
         return redirect()->to('catalog');
 
 
     }
-
-    public function view()
-    {
-        $cart_items = CartItem::where('cart_id', 1)->get();
-        return view("public.cart.index", compact('cart_items'));
-    }
-
-    public function remove($id)
-    {
-        $to_delete = CartItem::where('id', $id)->delete();
-        // dd($to_delete);
-        $cart_items = CartItem::where('cart_id', 1)->get();
-        return view("public.cart.index", compact('cart_items'));
-    }
-
-    public function empty($id)
-    {
-        CartItem::trucate();       
-        return view("public.catalog");
-    }
-
 }

@@ -8,6 +8,7 @@ Route::get('/', function(){
 Route::resource('/categories', 'CategoryController');
 Route::resource('/products', 'ProductController');
 Route::resource('/subscribers', 'ClientController');
+// Route::resource('/cart', 'CartController');
 
 
 // PRODUCTS
@@ -20,3 +21,7 @@ Route::get('catalog/date/{sort}', 'CatalogController@indexDateSort');
 Route::get('catalog/price/{sort}', 'CatalogController@indexPriceSort');
 
 Route::get('/cart/add/{product_id}', 'CartController@add')->name('admin.cart.add');
+
+Route::get('/cart/empty', 'CartController@empty')->name('cart.empty');
+Route::get('/cart/view', 'CartController@view')->name('cart.view');
+Route::get('/cart/remove/{id}', 'CartController@remove')->name('cart.remove');

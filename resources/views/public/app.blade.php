@@ -94,6 +94,8 @@
                 {{-- <span>Public Dashboard </span> --}}
             </ul>
 
+            {{-- {{ dd($cart_items) }} --}}
+
             <div class="cart text-center text-dark pr-5">
 
                 <div class="btn-group">
@@ -102,14 +104,8 @@
                     </button>
 
                     <div class="dropdown-menu">
-
-
                         @foreach ($cart_items as $item)
-
-                        {{-- {{ dd($item) }} --}}
-
-                            {{-- <a class="dropdown-item" href="#"><strong>({{ $total_cart_value }})</strong>{{ substr($item->product->name, 0, 20) }}...</a> --}}
-                            <a class="dropdown-item" href="#"><strong>({{ $item->amount }})</strong>{{ substr($item->product->name, 0, 20) }}...</a>
+                            <a class="dropdown-item" href="#"><strong>({{ $item->amount }})</strong>{{ substr($item->product->name, 0, 30) }}...</a>
                         @endforeach
 
                         <div class="dropdown-divider"></div>
@@ -119,7 +115,8 @@
                     </div>
                 </div>
 
-            </div>           
+            </div>
+        
             
 
         </nav>     
@@ -127,13 +124,13 @@
         <div class="container">
             <div class="row">
 
-                <div class= "col-9">
+                <div class= "col-12">
                     @yield('content')   
                 </div> 
 
-                <div class="col-3">
+                {{-- <div class="col-3">
                      @yield('sidebar')           
-                </div>
+                </div> --}}
 
             </div>
         </div>
