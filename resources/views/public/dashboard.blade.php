@@ -111,7 +111,7 @@
                         {{-- {{ dd($item) }} --}}
 
                             {{-- <a class="dropdown-item" href="#"><strong>({{ $total_cart_value }})</strong>{{ substr($item->product->name, 0, 20) }}...</a> --}}
-                            <a class="dropdown-item" href="#"><strong>({{ $item->amount }})</strong>{{ substr($item->product->name, 0, 20) }}...</a>
+                            <a class="dropdown-item" href="#"><strong>{{ $item->amount }} x </strong>{{ substr($item->product->name, 0, 20) }}...</a>
                         @endforeach
 
                         <div class="dropdown-divider"></div>

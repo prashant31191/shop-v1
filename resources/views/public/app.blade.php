@@ -100,12 +100,12 @@
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span> <i class="fas fa-shopping-cart pr-2"></i>  ({{ $cart_items_amount }} items) ${{ $total_cart_value }}</span> 
+                        <span> <i class="fas fa-shopping-cart pr-2"></i> ({{ $cart_items_amount }} items) ${{ $total_cart_value }}</span> 
                     </button>
 
                     <div class="dropdown-menu">
                         @foreach ($cart_items as $item)
-                            <a class="dropdown-item" href="#"><strong>({{ $item->amount }})</strong>{{ substr($item->product->name, 0, 30) }}...</a>
+                            <a class="dropdown-item" href="#"><strong>{{ $item->amount }} x </strong>{{ substr($item->product->name, 0, 30) }}...</a>
                         @endforeach
 
                         <div class="dropdown-divider"></div>

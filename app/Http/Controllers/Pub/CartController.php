@@ -60,10 +60,11 @@ class CartController extends Controller
         return view("public.cart.index", compact('cart_items'));
     }
 
-    public function empty($id)
+    public function empty()
     {
-        CartItem::trucate();       
-        return view("public.catalog");
+        CartItem::truncate();       
+        $cart_items = CartItem::where('cart_id', 1)->get();
+        return view("public.cart.index", compact('cart_items'));
     }
 
     public function minus($id)
