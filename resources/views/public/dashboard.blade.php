@@ -23,7 +23,9 @@
         max-width: 1400px;
         margin: auto;
     }
-
+    .navbar{
+        font-size: 18px;
+    }
     .price {
         text-align: center;
         position: absolute;
@@ -56,7 +58,7 @@
         <nav class="container navbar navbar-expand-lg navbar-dark bg-primary mb-3 mt-2">
 
             <!-- Brand -->
-            <a class="navbar-brand" href="/shop-v1/public/admin">
+            <a class="navbar-brand" href="/shop-v1/public/">
                 <img src="http://icons.iconarchive.com/icons/designbolts/seo/256/Market-Analysis-icon.png" style="height: 32px;">
             </a>
             
@@ -64,10 +66,10 @@
             <ul class="navbar-nav">
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/shop-v1/public">Home</a>
+                    <a class="nav-link" href="{{ route('public.catalog') }}">Home</a>
                 </li>        
         
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Subscribe</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('subscribers.create') }}">create</a>
@@ -87,7 +89,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('public.catalog') }}">index</a>
                     </div>
-                </li>     
+                </li>      --}}
             </ul>      
             
             <ul class="m-auto mb-1">                

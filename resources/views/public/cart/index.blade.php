@@ -45,9 +45,6 @@
                                     $i++;
                                 @endphp
 
-                                {{-- {{ dd($detail->itemPrice->value ) }} --}}
-                                {{-- {{ dd($detail->product->description ) }} --}}
-
                                     <tr>
                                         <th scope="row" class="border-0">
                                             
@@ -65,7 +62,12 @@
                                         </th>
                                         {{-- <td class="border-0 align-middle"><strong>${{ $detail->prices[0]['value'] }}</strong></td> --}}
                                         <td class="border-0 align-middle"><strong>${{ $detail->itemPrice->value }}</strong></td>
-                                        <td class="border-0 align-middle"><strong>{{ $detail['amount'] }}</strong></td>
+
+                                        <td class="border-0 align-middle">
+                                            <a href="{{ route('cart.minus', $detail->id) }}" class="text-dark"><i class="far fa-minus-square p-2"></i></a>
+                                            <strong> {{ $detail['amount'] }} </strong>
+                                            <a href="{{ route('cart.plus', $detail->id) }}" class="text-dark"><i class="far fa-plus-square p-2"></i></a>
+                                        </td>
                                         <td class="border-0 align-middle"><a href="{{ route('cart.remove', $detail->id) }}" class="text-dark"><i class="fa fa-trash"></i></a></td>
                                     </tr>
                                 
@@ -73,6 +75,7 @@
 
                             </tbody>
                         </table>
+                        <hr>
                         <h3 class="text-right text-danger pr-5">Total Price: ${{ $total }}</h3>
                     </div>
                     <!-- End -->

@@ -60,4 +60,24 @@ class CartController extends Controller
         return view("public.catalog");
     }
 
+    public function minus($id)
+    {
+        $total = CartItem::where('id', $id)->first();
+
+        if ($total->amount == 1) {
+            CartItem::where('id', $id)->delete();
+         }else{
+            CartItem::where('id', $id)->update(['amount' => $total->amount-1]);
+        }
+
+        $cart_items = CartItem::where('cart_id', 1)->get();
+        return view("public.cart.index", compact('cart_items'));
+    }
+    public function plus($id)
+    {
+        $total = CartItem::where('id', $id)->first();
+        CartItem::where('id', $id)->update(['amount' => $total->amount+1]);
+        $cart_items = CartItem::where('cart_id', 1)->get();
+        return view("public.cart.index", compact('cart_items'));
+    }
 }

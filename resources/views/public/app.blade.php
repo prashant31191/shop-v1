@@ -64,10 +64,10 @@
             <ul class="navbar-nav">
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/shop-v1/public">Home</a>
+                    <a class="nav-link" href="{{ route('public.catalog') }}">Home</a>
                 </li>        
         
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Subscribe</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('subscribers.create') }}">create</a>
@@ -80,14 +80,14 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('products.index') }}">index</a>
                     </div>
-                </li>   
-
+                </li>    --}}
+{{-- 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Catalog</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('public.catalog') }}">index</a>
                     </div>
-                </li>     
+                </li>      --}}
             </ul>      
             
             <ul class="m-auto mb-1">                
