@@ -13,6 +13,12 @@ class CartController extends Controller
 
         // Artisan::call('migrate:refresh');
 
+        // $cart = Cart::first();
+
+        // if (!isset($cart)) {
+        //     $cart = Cart::create();
+        // }
+
         $currency = Currency::where('id', 1)->first();
         $price = Price::where('priceable_id', $id)->first();
         $product = Product::where('id', $id)->first();
